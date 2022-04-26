@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Widget.Theme.TestApp.MyView" parent="">
+        <item name="android:background">#ACF381</item>
+        <item name="color">@color/light_blue_400</item>
+    </style>
+</resources>
