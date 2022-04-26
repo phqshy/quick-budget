@@ -1,6 +1,5 @@
-package me.fishy.testapp.common.request;
+package me.fishy.quickbudget.common.request;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;

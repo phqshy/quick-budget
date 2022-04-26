@@ -1,28 +1,19 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.quickbudget.app.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.gson.Gson;
 
-import java.net.MalformedURLException;
-
 import me.fishy.testapp.R;
-import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.HTTPPostRequest;
-import me.fishy.testapp.common.request.JSONPostRequest;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
@@ -62,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             drawer.openDrawer(GravityCompat.START);
             return true;
         }
-        if (item.getItemId() == R.id.action_settings){
+        /*if (item.getItemId() == R.id.action_settings){
             Toast.makeText(getBaseContext(), "Sending data to webserver", Toast.LENGTH_SHORT).show();
             UserDataHolder data = new UserDataHolder("Fishy", "dE3zNUTs");
             try {
@@ -71,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return false;
     }
 }

@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/phish/AndroidStudioProjects/QuickBudget/app/src/main/res/layout/boxview_layout.xml" value="0.4151436031331593" />
+        <entry key="..\:/Users/phish/AndroidStudioProjects/QuickBudget/app/src/main/res/layout/sample_box_background_view.xml" value="0.2017766497461929" />
         <entry key="..\:/Users/phish/AndroidStudioProjects/TestApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.143" />
         <entry key="..\:/Users/phish/AndroidStudioProjects/TestApp/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1" />
         <entry key="..\:/Users/phish/AndroidStudioProjects/TestApp/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1" />

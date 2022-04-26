@@ -1,4 +1,4 @@
-package me.fishy.testapp;
+package me.fishy.quickbudget;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("me.fishy.testapp", appContext.getPackageName());
+        assertEquals("me.fishy.quickbudget", appContext.getPackageName());
     }
 }

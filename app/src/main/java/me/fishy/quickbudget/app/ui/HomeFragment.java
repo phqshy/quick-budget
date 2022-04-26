@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.quickbudget.app.ui;
 
 import android.os.Bundle;
 
@@ -17,8 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import me.fishy.quickbudget.app.recycler.RecyclerAdapter;
 import me.fishy.testapp.R;
-import me.fishy.testapp.app.recycler.RecyclerAdapter;
 
 public class HomeFragment extends Fragment {
     public HomeFragment() {

@@ -1,4 +1,4 @@
-package me.fishy.testapp;
+package me.fishy.quickbudget;
 
 import org.junit.Test;
 

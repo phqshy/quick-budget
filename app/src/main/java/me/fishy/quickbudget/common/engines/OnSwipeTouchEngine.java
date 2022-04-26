@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.engines;
+package me.fishy.quickbudget.common.engines;
 
 import android.content.Context;
 import android.view.GestureDetector;

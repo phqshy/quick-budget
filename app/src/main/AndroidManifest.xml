@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.fishy.testapp"
+    package="quickbudget"
     android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0">
@@ -16,10 +16,10 @@
         android:theme="@style/Theme.TestApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".app.ui.LoginActivity"
+            android:name="me.fishy.quickbudget.app.ui.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".app.ui.MainActivity"
+            android:name="me.fishy.quickbudget.app.ui.MainActivity"
             android:exported="true"
             android:label="@string/home">
             <intent-filter>

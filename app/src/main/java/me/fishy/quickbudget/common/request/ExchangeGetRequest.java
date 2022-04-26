@@ -1,11 +1,9 @@
-package me.fishy.testapp.common.request;
+package me.fishy.quickbudget.common.request;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;

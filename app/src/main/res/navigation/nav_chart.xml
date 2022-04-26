@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="me.fishy.testapp.app.ui.HomeFragment"
+        android:name="me.fishy.quickbudget.app.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/exchangeRateFragment"
-        android:name="me.fishy.testapp.app.ui.ExchangeRateFragment"
+        android:name="me.fishy.quickbudget.app.ui.ExchangeRateFragment"
         android:label="ExchangeRateFragment" >
         <action
             android:id="@+id/action_exchangeRateFragment_to_homeFragment"

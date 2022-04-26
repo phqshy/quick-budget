@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.quickbudget.app.ui;
 
 import android.os.Bundle;
 
@@ -21,9 +21,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import me.fishy.quickbudget.common.engines.TextWatcherEngine;
+import me.fishy.quickbudget.common.request.ExchangeGetRequest;
 import me.fishy.testapp.R;
-import me.fishy.testapp.common.engines.TextWatcherEngine;
-import me.fishy.testapp.common.request.ExchangeGetRequest;
 
 public class ExchangeRateFragment extends Fragment {
     private JSONArray exchangeJson = new JSONArray();

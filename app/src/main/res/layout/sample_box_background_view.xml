@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <me.fishy.testapp.app.views.BoxBackgroundView
+    <me.fishy.quickbudget.app.views.BoxBackgroundView
         style="@style/Widget.Theme.TestApp.MyView"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:paddingLeft="20dp"
         android:paddingBottom="40dp"
-        app:color="@color/box_background_green"/>
+        app:color="@color/box_background_green" />
 
 </FrameLayout>

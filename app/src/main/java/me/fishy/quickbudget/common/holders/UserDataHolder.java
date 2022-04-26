@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.holders;
+package me.fishy.quickbudget.common.holders;
 
 import java.util.UUID;
 

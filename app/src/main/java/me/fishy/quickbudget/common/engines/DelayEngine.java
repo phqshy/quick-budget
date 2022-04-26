@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.engines;
+package me.fishy.quickbudget.common.engines;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;

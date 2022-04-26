@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.request;
+package me.fishy.quickbudget.common.request;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

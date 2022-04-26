@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.recycler;
+package me.fishy.quickbudget.app.recycler;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +14,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import me.fishy.quickbudget.common.engines.OnSwipeTouchEngine;
 import me.fishy.testapp.R;
-import me.fishy.testapp.common.engines.OnSwipeTouchEngine;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     public JSONArray jsonList = new JSONArray();

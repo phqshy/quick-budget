@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.engines;
+package me.fishy.quickbudget.common.engines;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class TextWatcherEngine implements TextWatcher {
     private boolean ackChange = false;

@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.quickbudget.app.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
