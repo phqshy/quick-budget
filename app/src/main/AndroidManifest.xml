@@ -16,18 +16,20 @@
         android:theme="@style/Theme.TestApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".app.ui.LoginActivity"
+            android:name=".app.ui.CreateAccountActivity"
             android:exported="false" />
         <activity
             android:name=".app.ui.MainActivity"
-            android:exported="true"
-            android:label="@string/home">
+            android:exported="false" />
+        <activity
+            android:name=".app.ui.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            />></activity>
+        </activity>
     </application>
 
 </manifest>

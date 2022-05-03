@@ -73,6 +73,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mainActionBar"
             app:navGraph="@navigation/nav_chart"
             tools:layout_editor_absoluteX="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <com.google.android.material.navigation.NavigationView

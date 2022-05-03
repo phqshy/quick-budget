@@ -50,6 +50,7 @@ public class ExchangeRateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextWatcherEngine.clearInstances();
+
         if (exchangeJson.length() == 0){
             try{
                 new ExchangeGetRequest("http://159.223.120.100:1984/exchange/usd", getContext()).get().thenAcceptAsync((e) -> {
@@ -58,6 +59,18 @@ public class ExchangeRateFragment extends Fragment {
                         usdJSON = usdJSON.getJSONObject("conversion_rates");
                         exchangeJson.put(usdJSON);
                         System.out.println("usd gotten");
+                    } catch (JSONException jsonException) {
+                        Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
+                        jsonException.printStackTrace();
+                    }
+                });
+
+                new ExchangeGetRequest("http://159.223.120.100:1984/exchange/jpy", getContext()).get().thenAcceptAsync((e) -> {
+                    try {
+                        JSONObject usdJSON = new JSONObject(e);
+                        usdJSON = usdJSON.getJSONObject("conversion_rates");
+                        exchangeJson.put(usdJSON);
+                        System.out.println("jpy gotten");
                     } catch (JSONException jsonException) {
                         Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
                         jsonException.printStackTrace();

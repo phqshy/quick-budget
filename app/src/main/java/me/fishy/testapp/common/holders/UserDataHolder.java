@@ -1,25 +1,25 @@
 package me.fishy.testapp.common.holders;
 
-import java.util.UUID;
+import com.google.gson.Gson;
 
 public class UserDataHolder {
-    private UUID uuid;
-    private String username;
+    private final String username;
     private String password;
     private double balance;
+    public static transient Gson gson = new Gson();
+    private static transient UserDataHolder INSTANCE;
 
     public UserDataHolder(String username, String password){
         this.username = username;
         this.password = password;
-        this.uuid = UUID.randomUUID();
+    }
+
+    public static Gson getGson(){
+        return gson;
     }
 
     public double getBalance() {
         return balance;
-    }
-
-    public UUID getUuid() {
-        return uuid;
     }
 
     public String getPassword() {
@@ -30,15 +30,19 @@ public class UserDataHolder {
         return username;
     }
 
+    public static UserDataHolder getInstance(){
+        return INSTANCE;
+    }
+
+    public static void setInstance(UserDataHolder instance){
+        INSTANCE = instance;
+    }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

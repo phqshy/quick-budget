@@ -4,5 +4,6 @@
         <item>USD</item>
         <item>GBP</item>
         <item>EUR</item>
+        <item>JPY</item>
     </string-array>
 </resources>

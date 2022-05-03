@@ -27,4 +27,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="information">Information</string>
+    <string name="host_acknoledgements">Exchange rate API hosted by https://exchangerate-api.com. \n\n All values are rounded to the nearest 100th when displayed. \n\n JPY- Japanese Yen. \n GBP- Great Britian Pound. \n EUR- Euro. \n USD- United States Dollar.</string>
 </resources>
