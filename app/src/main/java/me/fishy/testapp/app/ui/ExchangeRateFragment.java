@@ -53,7 +53,7 @@ public class ExchangeRateFragment extends Fragment {
 
         if (exchangeJson.length() == 0){
             try{
-                new ExchangeGetRequest("http://159.223.120.100:1984/exchange/usd", getContext()).get().thenAcceptAsync((e) -> {
+                new ExchangeGetRequest("https://phqsh.me/exchange/usd", getContext()).get().thenAcceptAsync((e) -> {
                     try {
                         JSONObject usdJSON = new JSONObject(e);
                         usdJSON = usdJSON.getJSONObject("conversion_rates");
@@ -65,7 +65,7 @@ public class ExchangeRateFragment extends Fragment {
                     }
                 });
 
-                new ExchangeGetRequest("http://159.223.120.100:1984/exchange/jpy", getContext()).get().thenAcceptAsync((e) -> {
+                new ExchangeGetRequest("https://phqsh.me/exchange/jpy", getContext()).get().thenAcceptAsync((e) -> {
                     try {
                         JSONObject usdJSON = new JSONObject(e);
                         usdJSON = usdJSON.getJSONObject("conversion_rates");
@@ -77,7 +77,7 @@ public class ExchangeRateFragment extends Fragment {
                     }
                 });
 
-                new ExchangeGetRequest("http://159.223.120.100:1984/exchange/gbp", getContext()).get().thenAcceptAsync((e) -> {
+                new ExchangeGetRequest("https://phqsh.me/exchange/gbp", getContext()).get().thenAcceptAsync((e) -> {
                     try {
                         JSONObject usdJSON = new JSONObject(e);
                         usdJSON = usdJSON.getJSONObject("conversion_rates");
@@ -89,7 +89,7 @@ public class ExchangeRateFragment extends Fragment {
                     }
                 });
 
-                new ExchangeGetRequest("http://159.223.120.100:1984/exchange/eur", getContext()).get().thenAcceptAsync((e) -> {
+                new ExchangeGetRequest("https://phqsh.me/exchange/eur", getContext()).get().thenAcceptAsync((e) -> {
                     try {
                         JSONObject usdJSON = new JSONObject(e);
                         usdJSON = usdJSON.getJSONObject("conversion_rates");

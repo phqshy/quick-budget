@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             try {
-                CompletableFuture<String> resp = new LoginGetRequest("http://159.223.120.100:1984/login", username.getText().toString().replace(' ', '_'), encrypt(password.getText().toString())).get();
+                CompletableFuture<String> resp = new LoginGetRequest("https://phqsh.me/login", username.getText().toString().replace(' ', '_'), encrypt(password.getText().toString())).get();
                 resp.thenAcceptAsync((r) -> {
                    System.out.println(r);
                    if (!(r.equals("Internal server error") || r.equals("Invalid credentials"))){

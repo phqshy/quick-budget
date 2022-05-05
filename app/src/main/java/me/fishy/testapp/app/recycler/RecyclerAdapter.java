@@ -19,11 +19,22 @@ import me.fishy.testapp.common.engines.OnSwipeTouchEngine;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     public JSONArray jsonList = new JSONArray();
+    protected final boolean shouldSwipe;
 
     public RecyclerAdapter(ArrayList<JSONObject> json){
         for (JSONObject i : json){
             jsonList.put(i);
         }
+
+        shouldSwipe = false;
+    }
+
+    public RecyclerAdapter(ArrayList<JSONObject> json, boolean shouldSwipe){
+        for (JSONObject i : json){
+            jsonList.put(i);
+        }
+
+        this.shouldSwipe = shouldSwipe;
     }
 
     @NonNull
@@ -64,13 +75,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             this.view = v;
             this.title = view.findViewById(R.id.titleBox);
             this.text = view.findViewById(R.id.textBox);
-            this.view.setOnTouchListener(new OnSwipeTouchEngine(view.getContext()){
-                @Override
-                public void onSwipeRight(){
-                    jsonList.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                }
-            });
+            if (shouldSwipe){
+                this.view.setOnTouchListener(new OnSwipeTouchEngine(view.getContext()){
+                    @Override
+                    public void onSwipeRight(){
+                        jsonList.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                    }
+                });
+            }
         }
 
         public View getCustomView() {

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_homeFragment_to_exchangeRateFragment"
             app:destination="@id/exchangeRateFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/exchangeRateFragment"
@@ -20,5 +23,20 @@
         <action
             android:id="@+id/action_exchangeRateFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_exchangeRateFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentsFragment"
+        android:name="me.fishy.testapp.app.ui.PaymentsFragment"
+        android:label="fragment_payments"
+        tools:layout="@layout/fragment_payments" >
+        <action
+            android:id="@+id/action_paymentsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_paymentsFragment_to_exchangeRateFragment"
+            app:destination="@id/exchangeRateFragment" />
     </fragment>
 </navigation>

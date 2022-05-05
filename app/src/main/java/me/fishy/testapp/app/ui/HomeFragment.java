@@ -55,6 +55,6 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
 
-        view.setAdapter(new RecyclerAdapter(json));
+        view.setAdapter(new RecyclerAdapter(json, true));
     }
 }

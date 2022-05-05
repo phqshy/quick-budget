@@ -13,9 +13,6 @@ import android.view.View;
 
 import me.fishy.testapp.R;
 
-/**
- * TODO: document your custom view class.
- */
 public class BoxBackgroundView extends View {
     private int mExampleColor = 0xFF0000;
     private RectF rectangle;

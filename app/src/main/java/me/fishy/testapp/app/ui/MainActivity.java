@@ -1,14 +1,9 @@
 package me.fishy.testapp.app.ui;
 
-import android.graphics.Color;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.AnimationSet;
 import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
@@ -23,7 +18,7 @@ import me.fishy.testapp.R;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
 
-    //0 = home, 1 = exchange
+    //0 = home, 1 = exchange, 2 = payments
     private int menuMode = 0;
 
     @Override
@@ -47,9 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 getMenuInflater().inflate(R.menu.toolbar_info, menu);
                 initDrawer();
                 return true;
+            case 2:
+                getMenuInflater().inflate(R.menu.toolbar_payment, menu);
+                initDrawer();
+                return true;
+            default:
+                getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+                initDrawer();
+                return true;
         }
-
-        return false;
     }
 
     private void initDrawer(){
@@ -57,7 +58,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.location_exchange).setOnClickListener(v -> {
             NavHostFragment navHostFragment =
                     (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_exchangeRateFragment);
+            switch (menuMode){
+                case 0:
+                    navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_exchangeRateFragment);
+                    break;
+                case 2:
+                    navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_exchangeRateFragment);
+                    break;
+                default:
+                    return;
+            }
 
             //set menu to exchange
             menuMode = 1;
@@ -67,10 +77,38 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.location_home).setOnClickListener(v -> {
             NavHostFragment navHostFragment =
                     (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_homeFragment);
+            switch (menuMode){
+                case 1:
+                    navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_homeFragment);
+                    break;
+                case 2:
+                    navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_homeFragment);
+                    break;
+                default:
+                    return;
+            }
 
             //set menu to home
             menuMode = 0;
+            invalidateOptionsMenu();
+            drawer.closeDrawer(GravityCompat.START);
+        });
+        findViewById(R.id.location_payment).setOnClickListener(v -> {
+            NavHostFragment navHostFragment =
+                    (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            switch (menuMode){
+                case 0:
+                    navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_paymentsFragment);
+                    break;
+                case 1:
+                    navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_paymentsFragment);
+                    break;
+                default:
+                    return;
+            }
+
+            //set menu to payments
+            menuMode = 2;
             invalidateOptionsMenu();
             drawer.closeDrawer(GravityCompat.START);
         });
@@ -92,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 window.setAnimationStyle(R.style.Animation_AppCompat_DropDownUp);
                 window.showAtLocation(findViewById(R.id.nav_host_fragment), Gravity.CENTER, 0, 0);
                 return true;
+            case R.id.action_add_payment:
+
         }
         return false;
     }
