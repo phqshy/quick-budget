@@ -37,6 +37,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.shouldSwipe = shouldSwipe;
     }
 
+    public void setData(ArrayList<JSONObject> array){
+        for (JSONObject i : array){
+            jsonList.put(i);
+
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

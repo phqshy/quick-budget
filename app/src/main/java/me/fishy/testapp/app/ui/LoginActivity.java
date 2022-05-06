@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private static String toastMessage = "";
     private static boolean SESSIONFLAG = false;
+    private static String name;
+    private static String session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //WARNING- HACKY CODE AHEAD!!!
-        //This auto-logs a user in if they have a set session ID, and makes checks later. Haven't tried it with fake session IDs
+        //This auto-logs a user in if they have a set session ID, and makes checks later.
+        //Haven't tried it with fake session IDs
+        //Keep collapsed lmao
         File uuid = new File(getCacheDir() + "/uuid.txt");
         if (uuid.exists()){
             try {
@@ -48,19 +52,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 scanner.close();
 
-                SESSIONFLAG = true;
+                LoginActivity.name = username;
+                LoginActivity.session = session;
 
-                new SessionGetRequest("https://phqsh.me/login_session", username, session)
-                        .get()
-                        .thenAccept((s) -> {
-                            System.out.println(s);
-                            if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))){
-                                UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
-                           }
-                        });
+                SESSIONFLAG = true;
             } catch (Exception e){
                 SESSIONFLAG = false;
-                e.printStackTrace();
             }
         }
 
@@ -121,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //if hacky code is true, log in and screw synchronization
     @Override
     protected void onStart() {
         super.onStart();
@@ -150,6 +148,20 @@ public class LoginActivity extends AppCompatActivity {
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    public static boolean didAutoLogin(){
+        boolean fill = SESSIONFLAG;
+        SESSIONFLAG = false;
+        return fill;
+    }
+
+    public static String getSession(){
+        return session;
+    }
+
+    public static String getName(){
+        return name;
     }
 
     public static void setToastMessage(String message){
