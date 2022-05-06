@@ -1,4 +1,2 @@
 # quick-budget
-Budgeting app for Android API 30 and up
-
-Very, very work in progress. Core API functionality and home screen framework is the only features right now.
+## This branch is depecrated! See https://github.com/phqshy/quick-budget/tree/dev for the correct branch.
