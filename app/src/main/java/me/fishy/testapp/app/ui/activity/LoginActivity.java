@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.testapp.app.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.LoginGetRequest;
-import me.fishy.testapp.common.request.SessionGetRequest;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText username;

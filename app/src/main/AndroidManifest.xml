@@ -16,13 +16,13 @@
         android:theme="@style/Theme.TestApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".app.ui.CreateAccountActivity"
+            android:name=".app.ui.activity.CreateAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".app.ui.MainActivity"
+            android:name=".app.ui.activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".app.ui.LoginActivity"
+            android:name=".app.ui.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

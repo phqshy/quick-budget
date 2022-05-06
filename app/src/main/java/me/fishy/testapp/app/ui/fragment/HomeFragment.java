@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.testapp.app.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
+import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.SessionGetRequest;
 
@@ -45,6 +46,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
+
+        if (HomeSettingsFragment.isEnabled()) HomeSettingsFragment.setEnabled(false);
 
         RecyclerView view = view1.findViewById(R.id.home_recycler);
         view.setLayoutManager(new LinearLayoutManager(this.getContext()));

@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.testapp.app.ui.fragment;
 
 import android.os.Bundle;
 

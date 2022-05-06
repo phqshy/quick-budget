@@ -1,14 +1,11 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.testapp.app.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.autofill.UserData;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.net.MalformedURLException;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.holders.UserDataHolder;

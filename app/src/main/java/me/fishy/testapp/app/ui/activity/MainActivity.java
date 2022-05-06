@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui;
+package me.fishy.testapp.app.ui.activity;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.net.MalformedURLException;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.fragment.PaymentsAddFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.JSONPostRequest;
 
@@ -144,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
 
                 navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_paymentsAddFragment);
                 return true;
+            case R.id.action_settings:
+                navHostFragment =
+                        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_homeSettingsFragment);
+
         }
         return false;
     }

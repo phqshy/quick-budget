@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="me.fishy.testapp.app.ui.HomeFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -15,10 +15,13 @@
         <action
             android:id="@+id/action_homeFragment_to_paymentsFragment"
             app:destination="@id/paymentsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_homeSettingsFragment"
+            app:destination="@id/homeSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/exchangeRateFragment"
-        android:name="me.fishy.testapp.app.ui.ExchangeRateFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.ExchangeRateFragment"
         android:label="ExchangeRateFragment" >
         <action
             android:id="@+id/action_exchangeRateFragment_to_homeFragment"
@@ -29,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentsFragment"
-        android:name="me.fishy.testapp.app.ui.PaymentsFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.PaymentsFragment"
         android:label="fragment_payments"
         tools:layout="@layout/fragment_payments" >
         <action
@@ -44,10 +47,15 @@
     </fragment>
     <fragment
         android:id="@+id/paymentsAddFragment"
-        android:name="me.fishy.testapp.app.ui.PaymentsAddFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.PaymentsAddFragment"
         android:label="PaymentsAddFragment" >
         <action
             android:id="@+id/action_paymentsAddFragment_to_paymentsFragment"
             app:destination="@id/paymentsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/homeSettingsFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.HomeSettingsFragment"
+        android:label="fragment_home_settings"
+        tools:layout="@layout/fragment_home_settings" />
 </navigation>
