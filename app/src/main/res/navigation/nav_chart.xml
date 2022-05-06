@@ -38,5 +38,16 @@
         <action
             android:id="@+id/action_paymentsFragment_to_exchangeRateFragment"
             app:destination="@id/exchangeRateFragment" />
+        <action
+            android:id="@+id/action_paymentsFragment_to_paymentsAddFragment"
+            app:destination="@id/paymentsAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentsAddFragment"
+        android:name="me.fishy.testapp.app.ui.PaymentsAddFragment"
+        android:label="PaymentsAddFragment" >
+        <action
+            android:id="@+id/action_paymentsAddFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
     </fragment>
 </navigation>

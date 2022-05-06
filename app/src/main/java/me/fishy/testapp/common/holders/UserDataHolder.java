@@ -2,12 +2,18 @@ package me.fishy.testapp.common.holders;
 
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class UserDataHolder {
     private final String username;
     private String password;
     private double balance;
+    private ArrayList<JSONObject> payments;
+    private String session;
     public static transient Gson gson = new Gson();
-    private static transient UserDataHolder INSTANCE;
+    private static transient UserDataHolder INSTANCE = null;
 
     public UserDataHolder(String username, String password){
         this.username = username;
@@ -30,6 +36,14 @@ public class UserDataHolder {
         return username;
     }
 
+    public ArrayList<JSONObject> getPayments() {
+        return payments;
+    }
+
+    public void setPayments (ArrayList<JSONObject> p){
+        this.payments = p;
+    }
+
     public static UserDataHolder getInstance(){
         return INSTANCE;
     }
@@ -42,7 +56,15 @@ public class UserDataHolder {
         this.balance = balance;
     }
 
+    public void addToBalance(double value){
+        balance += value;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUUID() {
+        return this.session;
     }
 }

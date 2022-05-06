@@ -13,7 +13,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.net.MalformedURLException;
+
 import me.fishy.testapp.R;
+import me.fishy.testapp.common.holders.UserDataHolder;
+import me.fishy.testapp.common.request.JSONPostRequest;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_exchangeRateFragment);
+                    getSupportActionBar().setTitle("Quick Budget");
                     break;
                 default:
                     return;
@@ -83,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_homeFragment);
+                    getSupportActionBar().setTitle("Quick Budget");
                     break;
                 default:
                     return;
@@ -131,8 +137,33 @@ public class MainActivity extends AppCompatActivity {
                 window.showAtLocation(findViewById(R.id.nav_host_fragment), Gravity.CENTER, 0, 0);
                 return true;
             case R.id.action_add_payment:
+                NavHostFragment navHostFragment =
+                        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
 
+                if (PaymentsAddFragment.isIsEnabled()) return false;
+
+                navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_paymentsAddFragment);
+                return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.out.println("Attempting to send data!");
+
+        try {
+            new JSONPostRequest("https://phqsh.me/update_user")
+                    .post(UserDataHolder.getGson().toJson(UserDataHolder.getInstance()))
+                    .thenAccept(System.out::println);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 }

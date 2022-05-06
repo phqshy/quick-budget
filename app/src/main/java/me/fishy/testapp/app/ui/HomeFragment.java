@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
+import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class HomeFragment extends Fragment {
     public HomeFragment() {
@@ -44,12 +45,8 @@ public class HomeFragment extends Fragment {
         ArrayList<JSONObject> json = new ArrayList<>();
         try {
             JSONObject jsontest = new JSONObject();
-            jsontest.put("title", "test")
-                    .put("text", "this is a test");
-            json.add(jsontest);
-            jsontest = new JSONObject();
-            jsontest.put("title", "number 2")
-                    .put("text", "this is the second one");
+            jsontest.put("title", "Your balance")
+                    .put("text", "$" + UserDataHolder.getInstance().getBalance());
             json.add(jsontest);
         } catch (JSONException e) {
             e.printStackTrace();

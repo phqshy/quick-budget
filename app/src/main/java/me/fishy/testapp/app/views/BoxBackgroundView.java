@@ -46,23 +46,16 @@ public class BoxBackgroundView extends View {
 
         rectColor = new Paint();
         rectColor.setColor(mExampleColor);
-        System.out.println();
         a.recycle();
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if (rectangle == null){
-            System.out.println("e");
             rectangle = new RectF(0, 0, getWidth(), getHeight());
         }
+        System.out.println(getWidth() + " " + getHeight());
         canvas.drawRoundRect(rectangle, 50f, 50.f, rectColor);
-        System.out.println("draw");
     }
 
     public int getExampleColor() {
