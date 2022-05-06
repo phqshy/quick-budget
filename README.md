@@ -1,4 +1,4 @@
 # quick-budget
 Budgeting app for Android API 30 and up
 
-Very, very work in progress. Core API functionality and home screen framework is the only features right now.
+Very, very work in progress. Currently has API functionality, log in system, session IDs, payments, and an exchange rate.
