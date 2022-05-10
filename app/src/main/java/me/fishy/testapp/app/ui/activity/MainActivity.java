@@ -13,6 +13,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 
 import me.fishy.testapp.R;
@@ -157,13 +162,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("Attempting to send data!");
-
+        System.out.println("Attempting to send data! called from main");
         try {
+            String json = UserDataHolder.getGson().toJson(UserDataHolder.getInstance());
+
+            File stored = new File(getCacheDir() + "/cached_instance.txt");
+
+            if (stored.exists()){
+                PrintWriter pw = new PrintWriter(stored);
+                pw.close();
+            }
+
+            System.out.println("Writing stored instance to file. called from main");
+            FileWriter writer = new FileWriter(stored);
+            writer.write(json);
+            writer.close();
+
             new JSONPostRequest("https://phqsh.me/update_user")
-                    .post(UserDataHolder.getGson().toJson(UserDataHolder.getInstance()))
+                    .post(json)
                     .thenAccept(System.out::println);
-        } catch (MalformedURLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

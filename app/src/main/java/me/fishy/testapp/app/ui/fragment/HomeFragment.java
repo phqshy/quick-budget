@@ -15,10 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
@@ -58,8 +66,34 @@ public class HomeFragment extends Fragment {
         //WARNING- MORE HACKY CODE AHEAD
         if (LoginActivity.didAutoLogin()){
             try {
+                File f = new File(getActivity().getCacheDir() + "/cached_instance.txt");
+
+                if (f.exists()){
+                    String cached = "";
+                    List<String> lines = Files.readAllLines(Paths.get(getActivity().getCacheDir() + "/cached_instance.txt"), Charset.defaultCharset());
+
+                    for (String s : lines){
+                        cached = cached.concat(s);
+                    }
+
+                    if (!cached.equals("null")){
+                        UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(cached, UserDataHolder.class));
+
+                        ArrayList<JSONObject> initJSON = new ArrayList<>();
+                        JSONObject json1 = new JSONObject();
+                        json1.put("title", "Your balance")
+                                .put("text", "$" + UserDataHolder.getInstance().getBalance());
+                        initJSON.add(json1);
+                        adapter.setData(initJSON);
+                        adapter.notifyDataSetChanged();
+                    }
+
+
+                }
+
                 System.out.println(LoginActivity.getName());
                 System.out.println(LoginActivity.getSession());
+
                 new SessionGetRequest("https://phqsh.me/login_session", LoginActivity.getName(), LoginActivity.getSession())
                         .get()
                         .thenAccept((s) -> {
@@ -79,7 +113,7 @@ public class HomeFragment extends Fragment {
 
                                 System.out.println(json);
                                 getActivity().runOnUiThread(() -> {
-                                    adapter.setData(json);
+                                    adapter.replaceData(json);
                                     adapter.notifyDataSetChanged();
                                 });
                             } else {
@@ -97,7 +131,7 @@ public class HomeFragment extends Fragment {
                                 }
                             }
                         });
-            } catch (MalformedURLException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         } else {

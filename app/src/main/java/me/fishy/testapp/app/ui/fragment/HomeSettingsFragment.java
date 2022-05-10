@@ -11,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
+import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class HomeSettingsFragment extends Fragment {
     private static boolean enabled = false;
@@ -44,12 +48,28 @@ public class HomeSettingsFragment extends Fragment {
                 PrintWriter pw = new PrintWriter(getActivity().getCacheDir() + "/uuid.txt");
                 pw.close();
 
+                UserDataHolder.setInstance(null);
+
+                String json = UserDataHolder.getGson().toJson(UserDataHolder.getInstance());
+
+                File stored = new File(getActivity().getCacheDir() + "/cached_instance.txt");
+
+                if (stored.exists()){
+                    PrintWriter writer2 = new PrintWriter(stored);
+                    writer2.close();
+                }
+
+                System.out.println("Writing stored instance to file.");
+                FileWriter writer = new FileWriter(stored);
+                writer.write(json);
+                writer.close();
+
                 Intent intent = new Intent(this.getActivity(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 System.out.println("forced credential reset (aka a logout)");
                 startActivity(intent);
                 this.getActivity().finish();
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });

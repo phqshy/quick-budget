@@ -8,13 +8,13 @@
 
     <EditText
         android:id="@+id/payments_amount"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="28dp"
         android:autofillHints="username"
         android:ems="15"
         android:hint="Amount"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/payments_amount_text"
@@ -37,14 +37,13 @@
 
     <EditText
         android:id="@+id/payments_reason"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:autofillHints="username"
         android:ems="15"
         android:hint="Reason"
-        android:inputType="textPersonName"
-        android:padding="16dp"
+        android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/payments_reason_text"

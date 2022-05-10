@@ -44,6 +44,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
+    public void replaceData(ArrayList<JSONObject> array){
+        jsonList = new JSONArray();
+        for (JSONObject i : array){
+            jsonList.put(i);
+
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
