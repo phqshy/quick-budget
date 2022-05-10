@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.fragment.HomeSettingsFragment;
 import me.fishy.testapp.app.ui.fragment.PaymentsAddFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.JSONPostRequest;
@@ -163,26 +164,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         System.out.println("Attempting to send data! called from main");
-        try {
-            String json = UserDataHolder.getGson().toJson(UserDataHolder.getInstance());
+        if (!HomeSettingsFragment.buttoned){
+            try {
+                String json = UserDataHolder.getGson().toJson(UserDataHolder.getInstance());
+                System.out.println(json);
+                File stored = new File(getCacheDir() + "/cached_instance.txt");
 
-            File stored = new File(getCacheDir() + "/cached_instance.txt");
+                if (stored.exists()){
+                    PrintWriter pw = new PrintWriter(stored);
+                    pw.close();
+                }
 
-            if (stored.exists()){
-                PrintWriter pw = new PrintWriter(stored);
-                pw.close();
+                System.out.println("Writing stored instance to file. called from main");
+                FileWriter writer = new FileWriter(stored);
+                writer.write(json);
+                writer.close();
+
+                new JSONPostRequest("https://phqsh.me/update_user")
+                        .post(json)
+                        .thenAccept(System.out::println);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            System.out.println("Writing stored instance to file. called from main");
-            FileWriter writer = new FileWriter(stored);
-            writer.write(json);
-            writer.close();
-
-            new JSONPostRequest("https://phqsh.me/update_user")
-                    .post(json)
-                    .thenAccept(System.out::println);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            System.out.println("is not a button call, setting it to false");
+            HomeSettingsFragment.buttoned = false;
         }
 
     }

@@ -20,9 +20,12 @@ import java.io.PrintWriter;
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
+import me.fishy.testapp.common.request.JSONPostRequest;
 
 public class HomeSettingsFragment extends Fragment {
     private static boolean enabled = false;
+    public static boolean buttoned = false;
+
 
     public HomeSettingsFragment() {
     }
@@ -44,13 +47,14 @@ public class HomeSettingsFragment extends Fragment {
         enabled = true;
 
         view.findViewById(R.id.logout_button).setOnClickListener((l) -> {
+            buttoned = true;
             try {
                 PrintWriter pw = new PrintWriter(getActivity().getCacheDir() + "/uuid.txt");
                 pw.close();
 
-                UserDataHolder.setInstance(null);
-
                 String json = UserDataHolder.getGson().toJson(UserDataHolder.getInstance());
+
+                UserDataHolder.setInstance(null);
 
                 File stored = new File(getActivity().getCacheDir() + "/cached_instance.txt");
 
@@ -63,6 +67,10 @@ public class HomeSettingsFragment extends Fragment {
                 FileWriter writer = new FileWriter(stored);
                 writer.write(json);
                 writer.close();
+
+                new JSONPostRequest("https://phqsh.me/update_user")
+                        .post(json)
+                        .thenAccept(System.out::println);
 
                 Intent intent = new Intent(this.getActivity(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

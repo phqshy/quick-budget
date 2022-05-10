@@ -79,8 +79,12 @@ public class PaymentsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        array = new ArrayList<>();
 
-        saveData();
+        try{
+            saveData();
+        } catch (NullPointerException e){
+        }
     }
 
     @Override
@@ -107,5 +111,6 @@ public class PaymentsFragment extends Fragment {
         }
 
         UserDataHolder.getInstance().setPayments(payments);
+        System.out.println(payments);
     }
 }
