@@ -15,7 +15,7 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 29
 
     defaultConfig {
         configurations.all {
@@ -28,7 +28,7 @@ android {
             }
         }
         applicationId "me.fishy.testapp"
-        minSdk 30
+        minSdk 29
         targetSdk 30
         versionCode 1
         versionName "1.0"

@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         //WARNING- HACKY CODE AHEAD!!!
         //This auto-logs a user in if they have a set session ID, and makes checks later.
         //Haven't tried it with fake session IDs
-        //Keep collapsed lmao
+        //Keep collapsed to avoid brain rot
         File uuid = new File(getCacheDir() + "/uuid.txt");
         if (uuid.exists()){
             try {
