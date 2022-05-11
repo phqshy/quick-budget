@@ -67,63 +67,75 @@ public class MainActivity extends AppCompatActivity {
     private void initDrawer(){
         drawer = findViewById(R.id.drawer_layout);
         findViewById(R.id.location_exchange).setOnClickListener(v -> {
-            NavHostFragment navHostFragment =
-                    (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            switch (menuMode){
-                case 0:
-                    navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_exchangeRateFragment);
-                    break;
-                case 2:
-                    navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_exchangeRateFragment);
-                    getSupportActionBar().setTitle("Quick Budget");
-                    break;
-                default:
-                    return;
-            }
+            try{
+                NavHostFragment navHostFragment =
+                        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                switch (menuMode){
+                    case 0:
+                        navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_exchangeRateFragment);
+                        break;
+                    case 2:
+                        navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_exchangeRateFragment);
+                        getSupportActionBar().setTitle("Quick Budget");
+                        break;
+                    default:
+                        return;
+                }
 
-            //set menu to exchange
-            menuMode = 1;
-            invalidateOptionsMenu();
-            drawer.closeDrawer(GravityCompat.START);
+                //set menu to exchange
+                menuMode = 1;
+                invalidateOptionsMenu();
+                drawer.closeDrawer(GravityCompat.START);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         });
         findViewById(R.id.location_home).setOnClickListener(v -> {
-            NavHostFragment navHostFragment =
-                    (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            switch (menuMode){
-                case 1:
-                    navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_homeFragment);
-                    break;
-                case 2:
-                    navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_homeFragment);
-                    getSupportActionBar().setTitle("Quick Budget");
-                    break;
-                default:
-                    return;
-            }
+            try{
+                NavHostFragment navHostFragment =
+                        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                switch (menuMode){
+                    case 1:
+                        navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_homeFragment);
+                        break;
+                    case 2:
+                        navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_homeFragment);
+                        getSupportActionBar().setTitle("Quick Budget");
+                        break;
+                    default:
+                        return;
+                }
 
-            //set menu to home
-            menuMode = 0;
-            invalidateOptionsMenu();
-            drawer.closeDrawer(GravityCompat.START);
+                //set menu to home
+                menuMode = 0;
+                invalidateOptionsMenu();
+                drawer.closeDrawer(GravityCompat.START);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         });
         findViewById(R.id.location_payment).setOnClickListener(v -> {
-            NavHostFragment navHostFragment =
-                    (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            switch (menuMode){
-                case 0:
-                    navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_paymentsFragment);
-                    break;
-                case 1:
-                    navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_paymentsFragment);
-                    break;
-                default:
-                    return;
-            }
+            try{
+                NavHostFragment navHostFragment =
+                        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                switch (menuMode){
+                    case 0:
+                        navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_paymentsFragment);
+                        break;
+                    case 1:
+                        navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_paymentsFragment);
+                        break;
+                    default:
+                        return;
+                }
 
-            //set menu to payments
-            menuMode = 2;
-            invalidateOptionsMenu();
-            drawer.closeDrawer(GravityCompat.START);
+                //set menu to payments
+                menuMode = 2;
+                invalidateOptionsMenu();
+                drawer.closeDrawer(GravityCompat.START);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         });
     }
 
