@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".app.ui.activity.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashScreenContent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
