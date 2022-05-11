@@ -9,19 +9,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 async function startRequest(){
-        let resp = await axios.get("https://v6.exchangerate-api.com/v6/0a71d4fb1406cbde584f17b7/latest/USD");
+        let resp = await axios.get("https://v6.exchangerate-api.com/v6/key/latest/USD");
         let data = resp.data;
         await db.set("exchange_usd", data);
 
-        resp = await axios.get("https://v6.exchangerate-api.com/v6/0a71d4fb1406cbde584f17b7/latest/GBP");
+        resp = await axios.get("https://v6.exchangerate-api.com/v6/key/latest/GBP");
         data = resp.data;
         await db.set("exchange_gbp", data);
 
-        resp = await axios.get("https://v6.exchangerate-api.com/v6/0a71d4fb1406cbde584f17b7/latest/EUR");
+        resp = await axios.get("https://v6.exchangerate-api.com/v6/key/latest/EUR");
         data = resp.data;
         await db.set("exchange_eur", data);
 
-        resp = await axios.get("https://v6.exchangerate-api.com/v6/0a71d4fb1406cbde584f17b7/latest/JPY");
+        resp = await axios.get("https://v6.exchangerate-api.com/v6/key/latest/JPY");
         data = resp.data;
         await db.set("exchange_jpy", data);
         setTimeout(() => {
