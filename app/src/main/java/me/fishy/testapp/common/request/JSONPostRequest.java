@@ -40,6 +40,7 @@ public class JSONPostRequest extends HTTPPostRequest{
                 String responseBody = scanner.useDelimiter("\\A").next();
                 future.complete(responseBody);
                 is.close();
+                con.disconnect();
             } catch (IOException e) {
                 future.cancel(true);
                 e.printStackTrace();
