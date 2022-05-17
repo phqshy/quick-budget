@@ -1,4 +1,4 @@
-package me.fishy.testapp.app.ui.fragment;
+package me.fishy.testapp.app.ui.fragment.schedule;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -48,8 +48,6 @@ public class ScheduledPaymentsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         recycler.setAdapter(new RecyclerAdapter(new ArrayList<>()));
-
-
     }
 
     public void setNotification(String title, String content, Calendar calendar) {
@@ -61,5 +59,11 @@ public class ScheduledPaymentsFragment extends Fragment {
         AlarmManager alarmManager = (AlarmManager) this.getContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending);
 
+    }
+
+    public Calendar generateCalendar(int year, int month, int day, int hour, int minute){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute);
+        return calendar;
     }
 }

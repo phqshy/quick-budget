@@ -1,22 +1,13 @@
-package me.fishy.testapp.app.ui.fragment;
+package me.fishy.testapp.app.ui.fragment.payments;
 
-import android.app.AlarmManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -25,10 +16,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import me.fishy.testapp.R;
-import me.fishy.testapp.common.engines.ScheduledManager;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class PaymentsAddFragment extends Fragment {

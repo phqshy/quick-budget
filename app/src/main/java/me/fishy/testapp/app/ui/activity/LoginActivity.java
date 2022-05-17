@@ -3,7 +3,6 @@ package me.fishy.testapp.app.ui.activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.LoginGetRequest;
+import me.fishy.testapp.common.request.get.LoginGetRequest;
 
 /**
  * Entry point to the app- all startup methods should be called here

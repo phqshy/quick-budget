@@ -19,20 +19,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.SessionGetRequest;
+import me.fishy.testapp.common.request.get.SessionGetRequest;
 
 public class HomeFragment extends Fragment {
     public HomeFragment() {

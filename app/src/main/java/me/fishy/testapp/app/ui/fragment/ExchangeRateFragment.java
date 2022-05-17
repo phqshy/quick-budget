@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.engines.TextWatcherEngine;
-import me.fishy.testapp.common.request.ExchangeGetRequest;
+import me.fishy.testapp.common.request.get.ExchangeGetRequest;
 
 public class ExchangeRateFragment extends Fragment {
     private JSONArray exchangeJson = new JSONArray();

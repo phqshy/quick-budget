@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.JSONPostRequest;
+import me.fishy.testapp.common.request.post.JSONPostRequest;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private EditText username;

@@ -1,6 +1,4 @@
-package me.fishy.testapp.common.request;
-
-import com.google.gson.Gson;
+package me.fishy.testapp.common.request.post;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +7,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class JSONPostRequest extends HTTPPostRequest{
+import me.fishy.testapp.common.request.HTTPPostRequest;
+
+public class JSONPostRequest extends HTTPPostRequest {
     public JSONPostRequest(String strurl) throws MalformedURLException {
         super(strurl);
     }

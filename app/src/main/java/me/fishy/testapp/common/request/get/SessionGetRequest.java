@@ -1,27 +1,21 @@
-package me.fishy.testapp.common.request;
+package me.fishy.testapp.common.request.get;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class ExchangeGetRequest extends HTTPGetRequest{
-    private final Context context;
+import me.fishy.testapp.common.request.HTTPGetRequest;
 
-    public ExchangeGetRequest(String strurl, Context context) throws MalformedURLException {
-        super(strurl);
-        this.context = context;
+public class SessionGetRequest extends HTTPGetRequest {
+    public SessionGetRequest(String strurl, String username, String session) throws MalformedURLException {
+        super(strurl + "?username=" + username + "&uuid=" + session);
     }
 
     @Override
-    public CompletableFuture<String> get() throws IOException {
+    public CompletableFuture<String> get(){
         Executor executor = Executors.newSingleThreadExecutor();
         CompletableFuture<String> future = new CompletableFuture<>();
         executor.execute(() -> {
@@ -31,9 +25,8 @@ public class ExchangeGetRequest extends HTTPGetRequest{
                 String responseBody = scanner.useDelimiter("\\A").next();
                 future.complete(responseBody);
                 is.close();
-            } catch (IOException e){
+            } catch (Exception e){
                 future.cancel(true);
-                e.printStackTrace();
             }
         });
         return future;

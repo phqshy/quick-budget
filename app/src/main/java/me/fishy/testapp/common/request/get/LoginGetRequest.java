@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.request;
+package me.fishy.testapp.common.request.get;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -7,13 +7,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class SessionGetRequest extends HTTPGetRequest{
-    public SessionGetRequest(String strurl, String username, String session) throws MalformedURLException {
-        super(strurl + "?username=" + username + "&uuid=" + session);
+import me.fishy.testapp.common.request.HTTPGetRequest;
+
+public class LoginGetRequest extends HTTPGetRequest {
+    public LoginGetRequest(String strurl, String username, String password) throws MalformedURLException {
+        super(strurl + "?username=" + username + "&password=" + password);
     }
 
     @Override
-    public CompletableFuture<String> get(){
+    public CompletableFuture<String> get() {
         Executor executor = Executors.newSingleThreadExecutor();
         CompletableFuture<String> future = new CompletableFuture<>();
         executor.execute(() -> {

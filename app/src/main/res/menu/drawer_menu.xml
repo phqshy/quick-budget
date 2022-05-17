@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_baseline_list_24"
         android:title="Payments"
         />
+    <item
+        android:id="@+id/location_scheduled"
+        android:icon="@drawable/ic_baseline_access_time_filled_24"
+        android:title="Schedule"
+        />
 </menu>

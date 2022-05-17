@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +19,7 @@ import java.io.PrintWriter;
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.JSONPostRequest;
+import me.fishy.testapp.common.request.post.JSONPostRequest;
 
 public class HomeSettingsFragment extends Fragment {
     private static boolean enabled = false;

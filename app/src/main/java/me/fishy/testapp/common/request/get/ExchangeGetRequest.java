@@ -1,5 +1,8 @@
-package me.fishy.testapp.common.request;
+package me.fishy.testapp.common.request.get;
 
+import android.content.Context;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.Scanner;
@@ -7,13 +10,18 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class LoginGetRequest extends HTTPGetRequest{
-    public LoginGetRequest(String strurl, String username, String password) throws MalformedURLException {
-        super(strurl + "?username=" + username + "&password=" + password);
+import me.fishy.testapp.common.request.HTTPGetRequest;
+
+public class ExchangeGetRequest extends HTTPGetRequest {
+    private final Context context;
+
+    public ExchangeGetRequest(String strurl, Context context) throws MalformedURLException {
+        super(strurl);
+        this.context = context;
     }
 
     @Override
-    public CompletableFuture<String> get() {
+    public CompletableFuture<String> get() throws IOException {
         Executor executor = Executors.newSingleThreadExecutor();
         CompletableFuture<String> future = new CompletableFuture<>();
         executor.execute(() -> {
@@ -23,8 +31,9 @@ public class LoginGetRequest extends HTTPGetRequest{
                 String responseBody = scanner.useDelimiter("\\A").next();
                 future.complete(responseBody);
                 is.close();
-            } catch (Exception e){
+            } catch (IOException e){
                 future.cancel(true);
+                e.printStackTrace();
             }
         });
         return future;
