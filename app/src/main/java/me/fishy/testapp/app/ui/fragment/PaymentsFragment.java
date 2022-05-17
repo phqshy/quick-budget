@@ -54,7 +54,6 @@ public class PaymentsFragment extends Fragment {
         RecyclerView recycler =  view.findViewById(R.id.payments_recycler);
 
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recycler.setHasFixedSize(true);
 
         try{
             ArrayList<JSONObject> payments = UserDataHolder.getInstance().getPayments();

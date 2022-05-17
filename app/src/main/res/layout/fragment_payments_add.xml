@@ -14,7 +14,7 @@
         android:autofillHints="username"
         android:ems="15"
         android:hint="Amount"
-        android:inputType="numberDecimal"
+        android:inputType="numberSigned|numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/payments_amount_text"

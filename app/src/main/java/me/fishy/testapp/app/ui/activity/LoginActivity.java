@@ -1,6 +1,9 @@
 package me.fishy.testapp.app.ui.activity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +24,9 @@ import me.fishy.testapp.R;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.LoginGetRequest;
 
+/**
+ * Entry point to the app- all startup methods should be called here
+ */
 public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
@@ -33,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme((R.style.Theme_TestApp));
         super.onCreate(savedInstanceState);
+        initAppData();
         setContentView(R.layout.activity_login);
 
 
@@ -134,6 +141,23 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+    
+    private void initAppData(){
+        createNotificationChannel();
+
+    }
+
+    private void createNotificationChannel(){
+        CharSequence name = "Quick Budget";
+        String description = "Budgeting app for Android";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+        NotificationChannel channel = new NotificationChannel("quick-budget", name, importance);
+        channel.setDescription(description);
+
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(channel);
     }
 
     public static String encrypt(String base) {
