@@ -81,5 +81,17 @@
         <action
             android:id="@+id/action_scheduledPaymentsFragment_to_paymentsFragment"
             app:destination="@id/paymentsFragment" />
+        <action
+            android:id="@+id/action_scheduledPaymentsFragment_to_newScheduleFragment"
+            app:destination="@id/newScheduleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newScheduleFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment"
+        android:label="fragment_new_schedule"
+        tools:layout="@layout/fragment_new_schedule" >
+        <action
+            android:id="@+id/action_newScheduleFragment_to_scheduledPaymentsFragment"
+            app:destination="@id/scheduledPaymentsFragment" />
     </fragment>
 </navigation>

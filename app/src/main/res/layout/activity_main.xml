@@ -68,11 +68,11 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="60dp"
             app:defaultNavHost="true"
             app:layout_constraintTop_toBottomOf="@+id/mainActionBar"
             app:navGraph="@navigation/nav_chart"
-            tools:layout_editor_absoluteX="16dp" />
+            tools:layout_editor_absoluteX="175dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->

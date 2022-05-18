@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                     NavHostFragment navHostFragment =
                             (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
 
-                    navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_paymentsAddFragment);
+                    navHostFragment.getNavController().navigate(R.id.action_scheduledPaymentsFragment_to_newScheduleFragment);
                     return true;
                 }
                 return false;

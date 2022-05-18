@@ -17,6 +17,7 @@ public class JSONPostRequest extends HTTPPostRequest {
     public JSONPostRequest(String strurl) throws MalformedURLException {
         super(strurl);
     }
+
     public CompletableFuture<String> post(String json){
         Executor executor = Executors.newSingleThreadExecutor();
         CompletableFuture<String> future = new CompletableFuture<>();

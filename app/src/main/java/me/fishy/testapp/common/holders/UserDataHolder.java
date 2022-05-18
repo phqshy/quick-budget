@@ -10,8 +10,11 @@ public class UserDataHolder {
     private final String username;
     private String password;
     private double balance;
+    //title: String, text: String
     private ArrayList<JSONObject> payments;
     private String session;
+    //title: String, text: String
+    private ArrayList<JSONObject> scheduled;
     public static transient Gson gson = new Gson();
     private static transient UserDataHolder INSTANCE = null;
 
@@ -66,5 +69,21 @@ public class UserDataHolder {
 
     public String getUUID() {
         return this.session;
+    }
+
+    public ArrayList<JSONObject> getScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduled(ArrayList<JSONObject> scheduled) {
+        this.scheduled = scheduled;
+    }
+
+    public void addToScheduled(JSONObject next){
+        if (scheduled == null){
+            scheduled = new ArrayList<>();
+        }
+
+        scheduled.add(next);
     }
 }

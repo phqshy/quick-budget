@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.ui.fragment.schedule.NewScheduleFragment">
+
+    <EditText
+        android:id="@+id/scheduled_add_calendar_date"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/scheduled_add_calendar_time"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scheduled_add_calendar_time"
+        app:layout_constraintWidth_percent="0.3" />
+
+    <EditText
+        android:id="@+id/scheduled_add_calendar_time"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/scheduled_add_calendar_date"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintWidth_percent="0.3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:text="Create Scheduled Payment"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/scheduled_add_shouldrepeatmonthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Should repeat monthly"
+        app:layout_constraintStart_toStartOf="@+id/scheduled_add_calendar_date"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_calendar_date" />
+
+    <CheckBox
+        android:id="@+id/scheduled_add_shouldrepeatdaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Should repeat daily"
+        app:layout_constraintStart_toStartOf="@+id/scheduled_add_shouldrepeatmonthly"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_shouldrepeatmonthly" />
+
+    <EditText
+        android:id="@+id/scheduled_add_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Amount"
+        android:inputType="numberDecimal|numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_shouldrepeatdaily"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <EditText
+        android:id="@+id/scheduled_add_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="Reason"
+        android:inputType="textCapSentences"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_amount"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <Button
+        android:id="@+id/scheduled_add_create_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Create Scheduled Payment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_reason" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
