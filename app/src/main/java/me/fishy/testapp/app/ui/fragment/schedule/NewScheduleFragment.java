@@ -82,17 +82,20 @@ public class NewScheduleFragment extends Fragment {
             String notifReason = reason.getText().toString();
 
             currentCalendar.set(Calendar.SECOND, 0);
-            setNotification("Payment: " + notifReason, "You have a payment due worth $" + numberAmount, currentCalendar);
-            currentCalendar.setTime(Calendar.getInstance().getTime());
+            int code = UserDataHolder.getInstance().addToNumScheduled();
+            setNotification(this.getContext(), "Payment: " + notifReason, "You have a payment due worth $" + numberAmount, currentCalendar, code);
 
             try{
                 JSONObject json = new JSONObject();
                 json.put("title", "Payment: " + notifReason);
                 json.put("text", "You have a payment due worth $" + numberAmount);
+                json.put("date", currentCalendar.getTime());
+                json.put("code", code);
 
                 UserDataHolder.getInstance().addToScheduled(json);
                 ScheduledPaymentsFragment.recyclerAdapter.replaceData(UserDataHolder.getInstance().getScheduled());
                 ScheduledPaymentsFragment.recyclerAdapter.notifyDataSetChanged();
+                currentCalendar.setTime(Calendar.getInstance().getTime());
             } catch(JSONException e){
                 e.printStackTrace();
             }
@@ -106,15 +109,26 @@ public class NewScheduleFragment extends Fragment {
         });
     }
 
-    private void setNotification(String title, String content, Calendar calendar) {
-        Intent intent = new Intent(this.getContext(), ScheduledManager.class);
+    public static void setNotification(Context context, String title, String content, Calendar calendar, int code) {
+        Intent intent = new Intent(context, ScheduledManager.class);
         intent.putExtra("title", title);
         intent.putExtra("content", content);
-        PendingIntent pending = PendingIntent.getBroadcast(this.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pending = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager) this.getContext().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending);
 
+    }
+
+    public static void cancelNotification(Context context, String title, String content, int code){
+        Intent intent = new Intent(context, ScheduledManager.class);
+        intent.putExtra("title", title);
+        intent.putExtra("content", content);
+        PendingIntent pending = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        pending.cancel();
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pending);
     }
 
     private void updateDate(EditText editText, Calendar calendar){

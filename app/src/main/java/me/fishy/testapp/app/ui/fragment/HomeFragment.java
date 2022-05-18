@@ -1,6 +1,7 @@
 package me.fishy.testapp.app.ui.fragment;
 
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
+import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.get.SessionGetRequest;
 
@@ -97,6 +100,18 @@ public class HomeFragment extends Fragment {
                             if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))){
                                 UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
 
+                                //register notifs
+                                for (JSONObject j : UserDataHolder.getInstance().getScheduled()){
+                                    try {
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.setTime((Date) j.get("date"));
+                                        NewScheduleFragment.setNotification(this.getContext(), j.getString("title"), j.getString("text"), cal, j.getInt("code"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                //init home recycler view
                                 ArrayList<JSONObject> json = new ArrayList<>();
                                 try {
                                     JSONObject jsontest = new JSONObject();

@@ -13,8 +13,9 @@ public class UserDataHolder {
     //title: String, text: String
     private ArrayList<JSONObject> payments;
     private String session;
-    //title: String, text: String
+    //title: String, text: String, date: Date, code: int
     private ArrayList<JSONObject> scheduled;
+    private transient int numScheduled = 0;
     public static transient Gson gson = new Gson();
     private static transient UserDataHolder INSTANCE = null;
 
@@ -86,4 +87,11 @@ public class UserDataHolder {
 
         scheduled.add(next);
     }
+
+    public int addToNumScheduled() {
+        numScheduled += 1;
+        return numScheduled;
+    }
+
+
 }
