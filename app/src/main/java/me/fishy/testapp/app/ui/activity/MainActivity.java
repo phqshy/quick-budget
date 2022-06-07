@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
 
     //0 = home, 1 = exchange, 2 = payments, 3 = scheduled
-    private int menuMode = 0;
+    public static int menuMode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                 }
 
-                //set menu to payments
+                //set menu to scheduled
                 menuMode = 3;
                 invalidateOptionsMenu();
                 drawer.closeDrawer(GravityCompat.START);

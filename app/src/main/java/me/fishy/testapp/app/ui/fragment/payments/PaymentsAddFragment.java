@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -17,10 +18,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class PaymentsAddFragment extends Fragment {
     private static boolean isEnabled = false;
+
+    private String title = null;
+    private String text = null;
 
     public PaymentsAddFragment() {
     }
@@ -28,6 +33,12 @@ public class PaymentsAddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try{
+            title = getArguments().getString("title");
+            text = getArguments().getString("text").split("\\$")[1];
+        } catch (NullPointerException e){
+            System.out.println("its null lmao");
+        }
     }
 
     @Override
@@ -40,13 +51,19 @@ public class PaymentsAddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EditText amount = view.findViewById(R.id.payments_amount);
+        EditText reason = view.findViewById(R.id.payments_reason);
+
         isEnabled = true;
+        if (title != null){
+            reason.setText(title);
+        }
+        if (text != null){
+            amount.setText(text);
+        }
 
         view.findViewById(R.id.create_payment_button).setOnClickListener((l) -> {
             try {
-                EditText amount = view.findViewById(R.id.payments_amount);
-                EditText reason = view.findViewById(R.id.payments_reason);
-
                 if (amount.getText().length() <= 0 || reason.getText().length() <= 0) {
                     Toast.makeText(getContext(), "Fill in all of the fields!", Toast.LENGTH_SHORT).show();
                     return;
@@ -66,12 +83,20 @@ public class PaymentsAddFragment extends Fragment {
 
                 isEnabled = false;
 
+                title = null;
+                text = null;
+
                 NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 navHostFragment.getNavController().navigate(R.id.action_paymentsAddFragment_to_paymentsFragment);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_payment, menu);
     }
 
     public static boolean isIsEnabled() {

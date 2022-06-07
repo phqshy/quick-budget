@@ -3,13 +3,16 @@ package me.fishy.testapp.common.notification;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.icu.util.Calendar;
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.navigation.NavDeepLinkBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +28,7 @@ import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
 import me.fishy.testapp.app.ui.fragment.schedule.ScheduledPaymentsFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
@@ -44,12 +48,27 @@ public class NotificationIntentManager extends IntentService {
         String title = intent.getExtras().getString("title");
         String text = intent.getExtras().getString("content");
 
+        //generating the intents for marking payments as read and cancelling the notification
+
+        //this intent will add/subtract this much from the account
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putString("text", text);
+
+        PendingIntent paymentsAddIntent = new NavDeepLinkBuilder(getApplicationContext())
+                .setComponentName(MainActivity.class)
+                .setGraph(R.navigation.nav_chart)
+                .setDestination(R.id.paymentsAddFragment)
+                .setArguments(args)
+                .createPendingIntent();
+
         Notification notification = new NotificationCompat.Builder(this, "quick-budget")
                 .setSmallIcon(R.drawable.transparent_logo)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.transparent_logo))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentText(text)
                 .setContentTitle(title)
+                .addAction(R.drawable.transparent_logo, "Complete", paymentsAddIntent)
                 .build();
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

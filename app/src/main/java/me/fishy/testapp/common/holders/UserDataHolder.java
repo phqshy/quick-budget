@@ -11,10 +11,10 @@ public class UserDataHolder {
     private String password;
     private double balance;
     //title: String, text: String
-    private ArrayList<JSONObject> payments;
+    private ArrayList<JSONObject> payments = new ArrayList<>();
     private String session;
     //title: String, text: String, date: Date, code: int
-    private ArrayList<JSONObject> scheduled;
+    private ArrayList<JSONObject> scheduled = new ArrayList<>();
     private transient int numScheduled = 0;
     public static transient Gson gson = new Gson();
     private static transient UserDataHolder INSTANCE = null;

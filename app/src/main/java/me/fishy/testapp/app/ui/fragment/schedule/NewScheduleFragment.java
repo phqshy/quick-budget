@@ -65,6 +65,8 @@ public class NewScheduleFragment extends Fragment {
         RadioButton repeatDaily = view.findViewById(R.id.scheduled_repeatDaily);
         RadioButton repeatMonthly = view.findViewById(R.id.scheduled_repeatMonthly);
 
+        neverRepeat.toggle();
+
         neverRepeat.setOnClickListener((l) -> repeatingType = RepeatingTypeEnum.NEVER);
         repeatDaily.setOnClickListener((l) -> repeatingType = RepeatingTypeEnum.DAILY);
         repeatMonthly.setOnClickListener((l) -> repeatingType = RepeatingTypeEnum.MONTHLY);
@@ -90,8 +92,6 @@ public class NewScheduleFragment extends Fragment {
             numberAmount = (double) filler / 100;
 
             String notifReason = reason.getText().toString();
-
-
 
             currentCalendar.set(Calendar.SECOND, 0);
             int code = UserDataHolder.getInstance().addToNumScheduled();

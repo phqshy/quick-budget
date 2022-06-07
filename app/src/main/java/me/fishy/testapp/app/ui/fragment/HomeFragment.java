@@ -104,6 +104,8 @@ public class HomeFragment extends Fragment {
                                     UserDataHolder.getInstance().setScheduled(new ArrayList<>());
                                 }
 
+                                readOfflineUpdates();
+
                                 //register notifs
                                 for (JSONObject j : UserDataHolder.getInstance().getScheduled()){
                                     try {
@@ -170,5 +172,67 @@ public class HomeFragment extends Fragment {
         }
 
 
+    }
+
+    private void readOfflineUpdates(){
+        File f = new File(getActivity().getFilesDir() + "/offline_updates.txt");
+
+        if (f.exists()){
+            try{
+                List<String> lines = Files.readAllLines(Paths.get(getActivity().getFilesDir() + "/offline_updates.txt"), Charset.defaultCharset());
+
+                /*
+                code to reading lines:
+                ACTION$^VALUE
+
+                Examples:
+                BALANCE -125 (remove 125 from balance)
+                RMNOTIF title1_title2+text1_text2 (remove notification from active notifications)
+                 */
+
+                for (String l : lines){
+                    String[] actions = l.split("\\$\\^");
+                    switch (actions[0]){
+                        case "BALANCE":
+                            updateBalance(actions[1]);
+                        case "RMNOTIF":
+                            removeNotification(actions[1]);
+                    }
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+                try{
+                    PrintWriter pw = new PrintWriter(getActivity().getFilesDir() + "/offline_updates.txt");
+                    pw.close();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void updateBalance(String amount){
+        double aDouble = Double.parseDouble(amount);
+        UserDataHolder.getInstance().addToBalance(aDouble);
+    }
+
+    private void removeNotification(String undecodedTitleText){
+        String[] titleText = undecodedTitleText.split("\\+");
+        String title = titleText[0].replaceAll("_", " ");
+        String text = titleText[0].replaceAll("_", " ");
+
+        ArrayList<JSONObject> array = UserDataHolder.getInstance().getScheduled();
+        try{
+            for (JSONObject json : array){
+                if (json.getString("title").equals(title) && json.getString("text").equals(text)){
+                    array.remove(json);
+                    UserDataHolder.getInstance().setScheduled(array);
+                    break;
+                }
+            }
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
     }
 }

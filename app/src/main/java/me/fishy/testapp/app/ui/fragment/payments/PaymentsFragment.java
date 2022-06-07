@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
+import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class PaymentsFragment extends Fragment {
@@ -34,6 +35,7 @@ public class PaymentsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.menuMode = 2;
 
     }
 
