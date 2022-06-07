@@ -2,6 +2,8 @@ package me.fishy.testapp.app.ui.fragment.schedule;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.ScheduledRecyclerAdapter;
+import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class ScheduledPaymentsFragment extends Fragment {
@@ -29,6 +32,7 @@ public class ScheduledPaymentsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.menuMode = 3;
     }
 
     @Override
@@ -58,5 +62,11 @@ public class ScheduledPaymentsFragment extends Fragment {
             UserDataHolder.getInstance().setScheduled(newScheduled);
             recyclerAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_payment, menu);
     }
 }

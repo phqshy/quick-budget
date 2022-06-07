@@ -62,6 +62,13 @@ public class NotificationIntentManager extends IntentService {
                 .setArguments(args)
                 .createPendingIntent();
 
+        PendingIntent removeScheduledIntent = new NavDeepLinkBuilder(getApplicationContext())
+                .setComponentName(MainActivity.class)
+                .setGraph(R.navigation.nav_chart)
+                .setDestination(R.id.scheduledPaymentsFragment)
+                .setArguments(args)
+                .createPendingIntent();
+
         Notification notification = new NotificationCompat.Builder(this, "quick-budget")
                 .setSmallIcon(R.drawable.transparent_logo)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.transparent_logo))
@@ -69,6 +76,7 @@ public class NotificationIntentManager extends IntentService {
                 .setContentText(text)
                 .setContentTitle(title)
                 .addAction(R.drawable.transparent_logo, "Complete", paymentsAddIntent)
+                .addAction(R.drawable.transparent_logo, "Remove", removeScheduledIntent)
                 .build();
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
