@@ -100,11 +100,19 @@ public class HomeFragment extends Fragment {
                             if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))){
                                 UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
 
+                                if (UserDataHolder.getInstance().getScheduled() == null){
+                                    UserDataHolder.getInstance().setScheduled(new ArrayList<>());
+                                }
+
                                 //register notifs
                                 for (JSONObject j : UserDataHolder.getInstance().getScheduled()){
                                     try {
                                         Calendar cal = Calendar.getInstance();
                                         cal.setTime((Date) j.get("date"));
+                                        if (cal.getTimeInMillis() > Calendar.getInstance().getTimeInMillis()){
+                                            UserDataHolder.getInstance().getScheduled().remove(j);
+                                            continue;
+                                        }
                                         NewScheduleFragment.setNotification(this.getContext(), j.getString("title"), j.getString("text"), cal, j.getInt("code"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
