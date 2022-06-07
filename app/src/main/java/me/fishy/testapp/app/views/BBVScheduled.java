@@ -15,6 +15,4 @@ public class BBVScheduled extends BoxBackgroundView{
     public BBVScheduled(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-
-
 }

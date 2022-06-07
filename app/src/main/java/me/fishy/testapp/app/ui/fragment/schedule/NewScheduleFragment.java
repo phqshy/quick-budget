@@ -19,22 +19,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import me.fishy.testapp.R;
-import me.fishy.testapp.app.recycler.ScheduledRecyclerAdapter;
-import me.fishy.testapp.common.engines.ScheduledManager;
+import me.fishy.testapp.common.notification.RepeatingTypeEnum;
+import me.fishy.testapp.common.notification.ScheduledManager;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class NewScheduleFragment extends Fragment {
     private Calendar currentCalendar = Calendar.getInstance();
+    private RepeatingTypeEnum repeatingType = RepeatingTypeEnum.NEVER;
 
     public NewScheduleFragment() {
     }
@@ -59,6 +61,13 @@ public class NewScheduleFragment extends Fragment {
         EditText amount = view.findViewById(R.id.scheduled_add_amount);
         EditText reason = view.findViewById(R.id.scheduled_add_reason);
         Button createButton = view.findViewById(R.id.scheduled_add_create_button);
+        RadioButton neverRepeat = view.findViewById(R.id.scheduled_dontRepeat);
+        RadioButton repeatDaily = view.findViewById(R.id.scheduled_repeatDaily);
+        RadioButton repeatMonthly = view.findViewById(R.id.scheduled_repeatMonthly);
+
+        neverRepeat.setOnClickListener((l) -> repeatingType = RepeatingTypeEnum.NEVER);
+        repeatDaily.setOnClickListener((l) -> repeatingType = RepeatingTypeEnum.DAILY);
+        repeatMonthly.setOnClickListener((l) -> repeatingType = RepeatingTypeEnum.MONTHLY);
 
         DatePickerDialog.OnDateSetListener date = (view1, year, month, day) -> {
             currentCalendar.set(Calendar.YEAR, year);
@@ -66,6 +75,7 @@ public class NewScheduleFragment extends Fragment {
             currentCalendar.set(Calendar.DAY_OF_MONTH,day);
             updateDate(dateText, currentCalendar);
         };
+
         TimePickerDialog.OnTimeSetListener time = (timePicker, i, i1) -> {
             currentCalendar.set(Calendar.HOUR_OF_DAY, i);
             currentCalendar.set(Calendar.MINUTE, i1);
@@ -81,16 +91,21 @@ public class NewScheduleFragment extends Fragment {
 
             String notifReason = reason.getText().toString();
 
+
+
             currentCalendar.set(Calendar.SECOND, 0);
             int code = UserDataHolder.getInstance().addToNumScheduled();
-            setNotification(this.getContext(), "Payment: " + notifReason, "You have a payment due worth $" + numberAmount, currentCalendar, code);
+            setNotification(this.getContext(), notifReason, "You have a payment worth $" + numberAmount, currentCalendar, code);
+
+            System.out.println("repeating type: " + repeatingType.getMode());
 
             try{
                 JSONObject json = new JSONObject();
-                json.put("title", "Payment: " + notifReason);
-                json.put("text", "You have a payment due worth $" + numberAmount);
-                json.put("date", currentCalendar.getTime());
+                json.put("title", notifReason);
+                json.put("text", "You have a payment worth $" + numberAmount);
+                json.put("date", currentCalendar.getTimeInMillis());
                 json.put("code", code);
+                json.put("repeating", repeatingType.getMode());
 
                 UserDataHolder.getInstance().addToScheduled(json);
                 ScheduledPaymentsFragment.recyclerAdapter.replaceData(UserDataHolder.getInstance().getScheduled());

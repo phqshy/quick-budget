@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
 import me.fishy.testapp.common.engines.OnSwipeTouchEngine;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
@@ -124,6 +125,8 @@ public class ScheduledRecyclerAdapter extends RecyclerView.Adapter<ScheduledRecy
                     ArrayList<JSONObject> userData = UserDataHolder.getInstance().getScheduled();
                     userData.remove(j);
                     UserDataHolder.getInstance().setScheduled(userData);
+
+                    NewScheduleFragment.cancelNotification(view.getContext(), j.getString("title"), j.getString("text"), j.getInt("code"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

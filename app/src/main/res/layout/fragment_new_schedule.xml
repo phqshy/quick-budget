@@ -54,35 +54,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/scheduled_add_shouldrepeatmonthly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Should repeat monthly"
-        app:layout_constraintStart_toStartOf="@+id/scheduled_add_calendar_date"
-        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_calendar_date" />
-
-    <CheckBox
-        android:id="@+id/scheduled_add_shouldrepeatdaily"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Should repeat daily"
-        app:layout_constraintStart_toStartOf="@+id/scheduled_add_shouldrepeatmonthly"
-        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_shouldrepeatmonthly" />
-
     <EditText
         android:id="@+id/scheduled_add_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="9dp"
         android:ems="10"
         android:hint="Amount"
         android:inputType="numberDecimal|numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_shouldrepeatdaily"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_radio_group"
         app:layout_constraintWidth_percent="0.7" />
 
     <EditText
@@ -109,5 +92,34 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scheduled_add_reason" />
+
+    <RadioGroup
+        android:id="@+id/scheduled_radio_group"
+        android:layout_width="289dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_add_calendar_date">
+
+        <RadioButton
+            android:id="@+id/scheduled_dontRepeat"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Don't repeat" />
+
+        <RadioButton
+            android:id="@+id/scheduled_repeatDaily"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Repeat daily" />
+
+        <RadioButton
+            android:id="@+id/scheduled_repeatMonthly"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Repeat monthly" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
                                 for (JSONObject j : UserDataHolder.getInstance().getScheduled()){
                                     try {
                                         Calendar cal = Calendar.getInstance();
-                                        cal.setTime((Date) j.get("date"));
+                                        cal.setTime(new Date(j.getLong("date")));
                                         if (cal.getTimeInMillis() > Calendar.getInstance().getTimeInMillis()){
                                             UserDataHolder.getInstance().getScheduled().remove(j);
                                             continue;

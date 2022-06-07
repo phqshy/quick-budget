@@ -1,10 +1,12 @@
-package me.fishy.testapp.common.engines;
+package me.fishy.testapp.common.notification;
 
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.icu.util.Calendar;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -19,9 +21,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
 import me.fishy.testapp.app.ui.fragment.schedule.ScheduledPaymentsFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.post.JSONPostRequest;
@@ -56,8 +60,32 @@ public class NotificationIntentManager extends IntentService {
             for (int i = 0; i < ScheduledPaymentsFragment.recyclerAdapter.jsonList.length(); i++){
                 JSONObject json = ScheduledPaymentsFragment.recyclerAdapter.jsonList.getJSONObject(i);
                 if (json.get("title").equals(title) && json.get("text").equals(text)){
-                    ScheduledPaymentsFragment.recyclerAdapter.jsonList.remove(i);
-                    ScheduledPaymentsFragment.recyclerAdapter.setIsDirty(true);
+                    //we found the corresponding json object! woo!!!
+                    //this is deeply flawed lmfao
+                    if (json.getInt("repeating") == RepeatingTypeEnum.NEVER.getMode()){
+                        ScheduledPaymentsFragment.recyclerAdapter.jsonList.remove(i);
+                        ScheduledPaymentsFragment.recyclerAdapter.setIsDirty(true);
+                    } else if (json.getInt("repeating") == RepeatingTypeEnum.DAILY.getMode()){
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(new Date(json.getLong("date")));
+                        cal.add(Calendar.DATE, 1);
+                        json.put("date", cal.getTimeInMillis());
+                        NewScheduleFragment.setNotification(getApplicationContext(), json.getString("title"), json.getString("text"), cal, UserDataHolder.getInstance().addToNumScheduled());
+
+                        ScheduledPaymentsFragment.recyclerAdapter.jsonList.remove(i);
+                        ScheduledPaymentsFragment.recyclerAdapter.jsonList.put(json);
+                        ScheduledPaymentsFragment.recyclerAdapter.setIsDirty(true);
+                    } else if (json.getInt("repeating") == RepeatingTypeEnum.MONTHLY.getMode()){
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(new Date(json.getLong("date")));
+                        cal.add(Calendar.MONTH, 1);
+                        json.put("date", cal.getTimeInMillis());
+                        NewScheduleFragment.setNotification(getApplicationContext(), json.getString("title"), json.getString("text"), cal, UserDataHolder.getInstance().addToNumScheduled());
+
+                        ScheduledPaymentsFragment.recyclerAdapter.jsonList.remove(i);
+                        ScheduledPaymentsFragment.recyclerAdapter.jsonList.put(json);
+                        ScheduledPaymentsFragment.recyclerAdapter.setIsDirty(true);
+                    }
                 }
 
                 list.add(json);

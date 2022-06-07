@@ -1,4 +1,4 @@
-package me.fishy.testapp.common.engines;
+package me.fishy.testapp.common.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

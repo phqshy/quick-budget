@@ -11,6 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.ScheduledRecyclerAdapter;
 import me.fishy.testapp.common.holders.UserDataHolder;
@@ -42,6 +47,15 @@ public class ScheduledPaymentsFragment extends Fragment {
 
         recycler.setAdapter(recyclerAdapter);
         if (recyclerAdapter.isDirty()){
+            ArrayList<JSONObject> newScheduled = new ArrayList<>();
+            for (int i = 0; i < recyclerAdapter.jsonList.length(); i++){
+                try {
+                    newScheduled.add(recyclerAdapter.jsonList.getJSONObject(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            UserDataHolder.getInstance().setScheduled(newScheduled);
             recyclerAdapter.notifyDataSetChanged();
         }
     }
