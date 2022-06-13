@@ -215,9 +215,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             case R.id.action_settings:
-                NavHostFragment navHostFragment =
+                try {
+                    NavHostFragment navHostFragment =
                         (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_homeSettingsFragment);
+                    navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_homeSettingsFragment);
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
 
         }
         return false;
