@@ -6,5 +6,6 @@ Features in Quick Budget include-
 > - Ledger for logging your income and expenses
 > - Ability to schedule payment reminders to repeat every day, month, or not at all
 > - An account system, for when you need to use a friend's phone when yours is dead
+> - A clean, easy-to-use user interface
 
 No APK yet, compile it yourself :D
