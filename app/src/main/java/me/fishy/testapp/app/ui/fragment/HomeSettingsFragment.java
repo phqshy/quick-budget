@@ -103,7 +103,7 @@ public class HomeSettingsFragment extends Fragment {
     private void destroyNotifications() throws JSONException {
         ArrayList<JSONObject> notifications = UserDataHolder.getInstance().getScheduled();
         for (JSONObject j : notifications){
-            NewScheduleFragment.cancelNotification(this.getContext(), j.getString("title"), j.getString("text"), j.getInt("code"));
+            NewScheduleFragment.cancelNotification(this.getContext(), j.getInt("code"));
         }
     }
 }

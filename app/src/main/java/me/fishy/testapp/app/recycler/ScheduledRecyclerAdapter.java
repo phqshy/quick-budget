@@ -126,7 +126,7 @@ public class ScheduledRecyclerAdapter extends RecyclerView.Adapter<ScheduledRecy
                     userData.remove(j);
                     UserDataHolder.getInstance().setScheduled(userData);
 
-                    NewScheduleFragment.cancelNotification(view.getContext(), j.getString("title"), j.getString("text"), j.getInt("code"));
+                    NewScheduleFragment.cancelNotification(view.getContext(), j.getInt("code"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

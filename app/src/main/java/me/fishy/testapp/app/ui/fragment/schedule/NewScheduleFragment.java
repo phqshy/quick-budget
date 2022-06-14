@@ -1,11 +1,8 @@
 package me.fishy.testapp.app.ui.fragment.schedule;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -14,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -28,10 +28,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.common.notification.NotificationWorker;
 import me.fishy.testapp.common.notification.RepeatingTypeEnum;
-import me.fishy.testapp.common.notification.ScheduledManager;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class NewScheduleFragment extends Fragment {
@@ -125,25 +126,22 @@ public class NewScheduleFragment extends Fragment {
     }
 
     public static void setNotification(Context context, String title, String content, Calendar calendar, int code) {
-        Intent intent = new Intent(context, ScheduledManager.class);
-        intent.putExtra("title", title);
-        intent.putExtra("content", content);
-        PendingIntent pending = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        OneTimeWorkRequest.Builder work = new OneTimeWorkRequest.Builder(NotificationWorker.class);
+        Data.Builder data = new Data.Builder();
+        data.putString("title", title);
+        data.putString("content", content);
+        work.setInputData(data.build());
+        work.setInitialDelay(calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis(), TimeUnit.MILLISECONDS);
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending);
-
+        WorkManager.getInstance(context).beginUniqueWork(
+                String.valueOf(code),
+                ExistingWorkPolicy.REPLACE,
+                work.build()
+        ).enqueue();
     }
 
-    public static void cancelNotification(Context context, String title, String content, int code){
-        Intent intent = new Intent(context, ScheduledManager.class);
-        intent.putExtra("title", title);
-        intent.putExtra("content", content);
-        PendingIntent pending = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        pending.cancel();
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pending);
+    public static void cancelNotification(Context context, int code){
+        WorkManager.getInstance(context).cancelUniqueWork(String.valueOf(code));
     }
 
     private void updateDate(EditText editText, Calendar calendar){
