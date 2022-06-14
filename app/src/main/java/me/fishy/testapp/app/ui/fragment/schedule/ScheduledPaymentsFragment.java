@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import me.fishy.testapp.R;
@@ -68,5 +70,19 @@ public class ScheduledPaymentsFragment extends Fragment {
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
         getActivity().getMenuInflater().inflate(R.menu.toolbar_payment, menu);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        try{
+            ArrayList<JSONObject> json = new ArrayList<>();
+            for (int i = 0; i < recyclerAdapter.jsonList.length(); i++){
+                json.add(recyclerAdapter.jsonList.getJSONObject(i));
+            }
+            UserDataHolder.getInstance().setScheduled(json);
+        } catch (Exception e){
+            Toast.makeText(this.getContext(), "Caught exception while writing to file", Toast.LENGTH_LONG).show();
+        }
     }
 }

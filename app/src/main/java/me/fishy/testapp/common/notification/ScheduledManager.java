@@ -11,6 +11,6 @@ public class ScheduledManager extends BroadcastReceiver {
         startService.putExtra("title", intent.getExtras().getString("title"));
         startService.putExtra("content", intent.getExtras().getString("content"));
 
-        context.startService(startService);
+        context.startForegroundService(startService);
     }
 }

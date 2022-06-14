@@ -27,7 +27,7 @@ android {
                 force 'androidx.lifecycle:lifecycle-runtime:2.3.1'
             }
         }
-        applicationId "me.fishy.testapp"
+        applicationId 'me.phqsh.quickbudget'
         minSdk 29
         targetSdk 30
         versionCode 1
