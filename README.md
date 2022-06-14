@@ -1,4 +1,10 @@
-# quick-budget
-Budgeting app for Android API 29 and up
+# Quick Budget
 
-Very, very work in progress. Currently has API functionality, log in system, session IDs, payments, and an exchange rate.
+#### Budgeting app for Android 10 and up
+Features in Quick Budget include-
+> - Exchange rates for four different currencies
+> - Ledger for logging your income and expenses
+> - Ability to schedule payment reminders to repeat every day, month, or not at all
+> - An account system, for when you need to use a friend's phone when yours is dead
+
+No APK yet, compile it yourself :D
