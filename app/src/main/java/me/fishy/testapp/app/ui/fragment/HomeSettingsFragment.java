@@ -24,6 +24,7 @@ import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.app.ui.fragment.payments.PaymentsFragment;
 import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
+import me.fishy.testapp.app.ui.fragment.schedule.ScheduledPaymentsFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.post.JSONPostRequest;
 
@@ -98,6 +99,7 @@ public class HomeSettingsFragment extends Fragment {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         System.out.println("forced credential reset (aka a logout)");
         PaymentsFragment.clearData();
+        ScheduledPaymentsFragment.clearData();
         startActivity(intent);
         this.getActivity().finish();
     }
