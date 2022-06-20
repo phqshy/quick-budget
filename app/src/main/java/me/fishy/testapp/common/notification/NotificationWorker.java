@@ -93,7 +93,7 @@ public class NotificationWorker extends Worker {
                         } else if (json.getInt("repeating") == RepeatingTypeEnum.DAILY.getMode()){
                             Calendar cal = Calendar.getInstance();
                             cal.setTime(new Date(json.getLong("date")));
-                            cal.add(Calendar.MINUTE, 1);
+                            cal.add(Calendar.DATE, 1);
                             json.put("date", cal.getTimeInMillis());
                             NewScheduleFragment.setNotification(getApplicationContext(), json.getString("title"), json.getString("text"), cal, UserDataHolder.getInstance().addToNumScheduled());
 
