@@ -26,6 +26,7 @@ import me.fishy.testapp.common.request.post.JSONPostRequest;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
+    public static File cacheDirectory;
 
     //0 = home, 1 = exchange, 2 = payments, 3 = scheduled
     public static int menuMode = 0;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.mainActionBar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(AppCompatResources.getDrawable(getBaseContext(), R.drawable.ic_hamburger));
+        cacheDirectory = this.getCacheDir();
     }
 
     @Override
@@ -172,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //set menu to scheduled
                 menuMode = 3;
+                System.out.println("called main");
                 invalidateOptionsMenu();
                 drawer.closeDrawer(GravityCompat.START);
             } catch (Exception e){

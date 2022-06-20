@@ -93,5 +93,9 @@ public class UserDataHolder {
         return numScheduled;
     }
 
+    public void addToPayments(JSONObject object){
+        scheduled.add(object);
+    }
+
 
 }

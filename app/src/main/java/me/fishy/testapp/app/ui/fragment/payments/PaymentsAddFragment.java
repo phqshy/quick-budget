@@ -1,5 +1,6 @@
 package me.fishy.testapp.app.ui.fragment.payments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,9 +18,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+
 import me.fishy.testapp.R;
+import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
+import me.fishy.testapp.common.request.get.SessionGetRequest;
 
 public class PaymentsAddFragment extends Fragment {
     private static boolean isEnabled = false;
@@ -36,6 +44,10 @@ public class PaymentsAddFragment extends Fragment {
         try{
             title = getArguments().getString("title");
             text = getArguments().getString("text").split("\\$")[1];
+
+            if (title != null && text != null){
+                getSession();
+            }
         } catch (NullPointerException e){
             System.out.println("its null lmao");
         }
@@ -101,5 +113,40 @@ public class PaymentsAddFragment extends Fragment {
 
     public static boolean isIsEnabled() {
         return isEnabled;
+    }
+
+    private void getSession(){
+        try{
+            new SessionGetRequest("https://phqsh.me/login_session", LoginActivity.getName(), LoginActivity.getSession())
+                    .get()
+                    .thenAccept((s) -> {
+                        System.out.println(s);
+                        if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))) {
+                            UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
+
+                            if (UserDataHolder.getInstance().getScheduled() == null) {
+                                UserDataHolder.getInstance().setScheduled(new ArrayList<>());
+                            }
+
+                        } else {
+                            try {
+                                PrintWriter pw = new PrintWriter(getActivity().getCacheDir() + "/uuid.txt");
+                                pw.close();
+
+                                UserDataHolder.setInstance(null);
+
+                                Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                System.out.println("invalid credentials, moving to log in");
+                                startActivity(intent);
+                                this.getActivity().finish();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }

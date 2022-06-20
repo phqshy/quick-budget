@@ -54,7 +54,6 @@ public class BoxBackgroundView extends View {
         if (rectangle == null){
             rectangle = new RectF(0, 0, getWidth(), getHeight());
         }
-        System.out.println(getWidth() + " " + getHeight());
         canvas.drawRoundRect(rectangle, 20.f, 20.f, rectColor);
     }
 

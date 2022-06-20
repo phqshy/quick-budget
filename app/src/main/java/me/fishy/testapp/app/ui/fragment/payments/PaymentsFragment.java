@@ -73,6 +73,10 @@ public class PaymentsFragment extends Fragment {
     }
 
     public static void addToArray(JSONObject o){
+        if (adapter == null){
+            UserDataHolder.getInstance().addToPayments(o);
+            return;
+        }
         array.add(0, o);
         adapter.notifyItemInserted(0);
     }
@@ -113,5 +117,9 @@ public class PaymentsFragment extends Fragment {
 
         UserDataHolder.getInstance().setPayments(payments);
         System.out.println(payments);
+    }
+
+    public static void clearData(){
+        array = new ArrayList<>();
     }
 }
