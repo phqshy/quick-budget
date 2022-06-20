@@ -1,9 +1,11 @@
 package me.fishy.testapp.app.recycler;
 
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
@@ -101,12 +105,31 @@ public class ScheduledRecyclerAdapter extends RecyclerView.Adapter<ScheduledRecy
         private TextView title;
         private TextView text;
         private final View view;
+        private Calendar time;
 
         public ViewHolder(View v) {
             super(v);
             this.view = v;
             this.title = view.findViewById(R.id.titleBox);
             this.text = view.findViewById(R.id.textBox);
+
+            this.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String format = "MM/dd/yy hh:mm";
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
+                    String pmoram;
+
+                    if (time.get(Calendar.HOUR_OF_DAY) >= 12){
+                        pmoram = "PM";
+                    } else {
+                        pmoram = "AM";
+                    }
+
+                    Toast.makeText(view.getContext(), dateFormat.format(time.getTime()) + " " + pmoram, Toast.LENGTH_SHORT).show();
+                }
+            });
+
             if (shouldSwipe){
                 this.view.setOnTouchListener(new OnSwipeTouchEngine(view.getContext()){
                     @Override
@@ -135,6 +158,12 @@ public class ScheduledRecyclerAdapter extends RecyclerView.Adapter<ScheduledRecy
 
         public View getCustomView() {
             return view;
+        }
+
+        public void setDate(long time){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time);
+            this.time = calendar;
         }
 
         public void setTitle(String title) {
