@@ -100,7 +100,7 @@ public class ScheduledPaymentsFragment extends Fragment {
             return UserDataHolder.getInstance().getScheduled();
         } catch (IOException e){
             e.printStackTrace();
-            throw new RuntimeException("could not get cached dir");
+            return null;
         }
     }
 

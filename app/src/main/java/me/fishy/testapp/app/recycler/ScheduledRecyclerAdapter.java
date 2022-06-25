@@ -47,6 +47,7 @@ public class ScheduledRecyclerAdapter extends RecyclerView.Adapter<ScheduledRecy
             }
         } catch (NullPointerException e){
             e.printStackTrace();
+            jsonList = new JSONArray();
         } finally{
             this.shouldSwipe = shouldSwipe;
         }
@@ -91,6 +92,7 @@ public class ScheduledRecyclerAdapter extends RecyclerView.Adapter<ScheduledRecy
             JSONObject pos = jsonList.getJSONObject(position);
             holder.setText(pos.getString("text"));
             holder.setTitle(pos.getString("title"));
+            holder.setDate(pos.getLong("date"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

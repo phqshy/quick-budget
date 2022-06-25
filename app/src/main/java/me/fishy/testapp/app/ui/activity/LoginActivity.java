@@ -112,9 +112,9 @@ public class LoginActivity extends AppCompatActivity {
                                pw.close();
                            }
                            FileWriter writer = new FileWriter(f);
-                           System.out.println("writing uuid");
+                           System.out.println("writing uuid login");
                            writer.write(UserDataHolder.getInstance().getUUID());
-                           System.out.println("writing username");
+                           System.out.println("writing username login");
                            writer.write("\n");
                            writer.write(UserDataHolder.getInstance().getUsername());
                            writer.close();
