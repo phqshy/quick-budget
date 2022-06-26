@@ -34,6 +34,7 @@ public class PaymentsAddFragment extends Fragment {
 
     private String title = null;
     private String text = null;
+    private boolean overTargetWarn = false;
 
     public PaymentsAddFragment() {
     }
@@ -86,6 +87,16 @@ public class PaymentsAddFragment extends Fragment {
                 numberAmount = numberAmount * 100;
                 int filler = (int) numberAmount;
                 numberAmount = (double) filler / 100;
+
+                if (numberAmount + UserDataHolder.getInstance().getMonthlyPayments() > UserDataHolder.getInstance().getTargetMonthlyPayments()){
+                    if (!overTargetWarn){
+                        Toast.makeText(this.getContext(), "You are above your monthly target! Do you want to continue?", Toast.LENGTH_LONG).show();
+                        overTargetWarn = true;
+                        return;
+                    } else {
+                        overTargetWarn = false;
+                    }
+                }
 
                 json.put("title", "$" + numberAmount);
                 json.put("text", reason.getText().toString());
