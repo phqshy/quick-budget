@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_scheduledPaymentsFragment"
             app:destination="@id/scheduledPaymentsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_targetSpendingFragment"
+            app:destination="@id/targetSpendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/exchangeRateFragment"
@@ -35,6 +38,9 @@
         <action
             android:id="@+id/action_exchangeRateFragment_to_scheduledPaymentsFragment"
             app:destination="@id/scheduledPaymentsFragment" />
+        <action
+            android:id="@+id/action_exchangeRateFragment_to_targetSpendingFragment"
+            app:destination="@id/targetSpendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentsFragment"
@@ -53,6 +59,9 @@
         <action
             android:id="@+id/action_paymentsFragment_to_scheduledPaymentsFragment"
             app:destination="@id/scheduledPaymentsFragment" />
+        <action
+            android:id="@+id/action_paymentsFragment_to_targetSpendingFragment"
+            app:destination="@id/targetSpendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentsAddFragment"
@@ -84,6 +93,9 @@
         <action
             android:id="@+id/action_scheduledPaymentsFragment_to_newScheduleFragment"
             app:destination="@id/newScheduleFragment" />
+        <action
+            android:id="@+id/action_scheduledPaymentsFragment_to_targetSpendingFragment"
+            app:destination="@id/targetSpendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/newScheduleFragment"
@@ -93,5 +105,22 @@
         <action
             android:id="@+id/action_newScheduleFragment_to_scheduledPaymentsFragment"
             app:destination="@id/scheduledPaymentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/targetSpendingFragment"
+        android:name="me.fishy.testapp.app.ui.fragment.TargetSpendingFragment"
+        android:label="TargetSpendingFragment" >
+        <action
+            android:id="@+id/action_targetSpendingFragment_to_scheduledPaymentsFragment"
+            app:destination="@id/scheduledPaymentsFragment" />
+        <action
+            android:id="@+id/action_targetSpendingFragment_to_exchangeRateFragment"
+            app:destination="@id/exchangeRateFragment" />
+        <action
+            android:id="@+id/action_targetSpendingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_targetSpendingFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
     </fragment>
 </navigation>

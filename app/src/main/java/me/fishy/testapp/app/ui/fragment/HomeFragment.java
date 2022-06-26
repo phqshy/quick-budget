@@ -26,10 +26,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.recycler.RecyclerAdapter;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
+import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
 import me.fishy.testapp.common.request.get.SessionGetRequest;
@@ -169,6 +171,26 @@ public class HomeFragment extends Fragment {
             }
 
             adapter.setData(json);
+        }
+
+        try{
+            File f = new File(getActivity().getFilesDir() + "/timeinms.txt");
+            if (f.exists()){
+                Scanner s = new Scanner(f);
+                String lo = s.next();
+                long l = Long.getLong(lo);
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(l);
+
+                Calendar cal = Calendar.getInstance();
+
+                if (c.get(Calendar.MONTH) != cal.get(Calendar.MONTH)){
+                    UserDataHolder.getInstance().setMonthlyPayments(0);
+                    UserDataHolder.getInstance().setTargetMonthlyPayments(0);
+                }
+            }
+        } catch (IOException e){
+
         }
 
 

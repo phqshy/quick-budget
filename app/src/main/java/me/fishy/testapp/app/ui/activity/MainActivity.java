@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.fragment.HomeSettingsFragment;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     public static File cacheDirectory;
 
-    //0 = home, 1 = exchange, 2 = payments, 3 = scheduled
+    //0 = home, 1 = exchange, 2 = payments, 3 = scheduled, 4 = target
     public static int menuMode = 0;
 
     @Override
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 getMenuInflater().inflate(R.menu.toolbar_payment, menu);
                 initDrawer();
                 return true;
+            case 4:
+                getMenuInflater().inflate(R.menu.toolbar_default, menu);
+                initDrawer();
+                return true;
             default:
                 getMenuInflater().inflate(R.menu.toolbar_menu, menu);
                 initDrawer();
@@ -85,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         navHostFragment.getNavController().navigate(R.id.action_scheduledPaymentsFragment_to_exchangeRateFragment);
                         getSupportActionBar().setTitle("Quick Budget");
+                        break;
+                    case 4:
+                        navHostFragment.getNavController().navigate(R.id.action_targetSpendingFragment_to_exchangeRateFragment);
                         break;
                     default:
                         return;
@@ -114,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                         navHostFragment.getNavController().navigate(R.id.action_scheduledPaymentsFragment_to_homeFragment);
                         getSupportActionBar().setTitle("Quick Budget");
                         break;
+                    case 4:
+                        navHostFragment.getNavController().navigate(R.id.action_targetSpendingFragment_to_homeFragment);
+                        break;
                     default:
                         return;
                 }
@@ -140,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         navHostFragment.getNavController().navigate(R.id.action_scheduledPaymentsFragment_to_paymentsFragment);
                         getSupportActionBar().setTitle("Quick Budget");
+                        break;
+                    case 4:
+                        navHostFragment.getNavController().navigate(R.id.action_targetSpendingFragment_to_paymentsFragment);
                         break;
                     default:
                         return;
@@ -168,12 +182,46 @@ public class MainActivity extends AppCompatActivity {
                         navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_scheduledPaymentsFragment);
                         getSupportActionBar().setTitle("Quick Budget");
                         break;
+                    case 4:
+                        navHostFragment.getNavController().navigate(R.id.action_targetSpendingFragment_to_scheduledPaymentsFragment);
+                        break;
                     default:
                         return;
                 }
 
                 //set menu to scheduled
                 menuMode = 3;
+                System.out.println("called main");
+                invalidateOptionsMenu();
+                drawer.closeDrawer(GravityCompat.START);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        findViewById(R.id.location_target).setOnClickListener(v -> {
+            try{
+                NavHostFragment navHostFragment =
+                        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                switch (menuMode){
+                    case 0:
+                        navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_targetSpendingFragment);
+                        break;
+                    case 1:
+                        navHostFragment.getNavController().navigate(R.id.action_exchangeRateFragment_to_targetSpendingFragment);
+                        break;
+                    case 2:
+                        navHostFragment.getNavController().navigate(R.id.action_paymentsFragment_to_targetSpendingFragment);
+                        getSupportActionBar().setTitle("Quick Budget");
+                        break;
+                    case 3:
+                        navHostFragment.getNavController().navigate(R.id.action_scheduledPaymentsFragment_to_targetSpendingFragment);
+                        break;
+                    default:
+                        return;
+                }
+
+                //set menu to scheduled
+                menuMode = 4;
                 System.out.println("called main");
                 invalidateOptionsMenu();
                 drawer.closeDrawer(GravityCompat.START);
@@ -250,6 +298,19 @@ public class MainActivity extends AppCompatActivity {
                 FileWriter writer = new FileWriter(stored);
                 writer.write(json);
                 writer.close();
+
+
+                System.out.println("Writing current time in mills to file. called from main");
+                File mils = new File(getFilesDir() + "/timeinms.txt");
+
+                if (mils.exists()){
+                    PrintWriter pw = new PrintWriter(stored);
+                    pw.close();
+                }
+
+                FileWriter writer2 = new FileWriter(mils);
+                writer2.write(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                writer2.close();
 
                 new JSONPostRequest("https://phqsh.me/update_user")
                         .post(json)

@@ -15,6 +15,8 @@ public class UserDataHolder {
     private String session;
     //title: String, text: String, date: Date, code: int
     private ArrayList<JSONObject> scheduled = new ArrayList<>();
+    private double monthlyPayments;
+    private double targetMonthlyPayments;
     private transient int numScheduled = 0;
     public static transient Gson gson = new Gson();
     private static transient UserDataHolder INSTANCE = null;
@@ -97,5 +99,23 @@ public class UserDataHolder {
         scheduled.add(object);
     }
 
+    public double getMonthlyPayments() {
+        return monthlyPayments;
+    }
 
+    public void setMonthlyPayments(double monthlyPayments) {
+        this.monthlyPayments = monthlyPayments;
+    }
+
+    public void addToMonthlyPayments(double amount){
+        this.monthlyPayments += amount;
+    }
+
+    public double getTargetMonthlyPayments() {
+        return targetMonthlyPayments;
+    }
+
+    public void setTargetMonthlyPayments(double targetMonthlyPayments) {
+        this.targetMonthlyPayments = targetMonthlyPayments;
+    }
 }

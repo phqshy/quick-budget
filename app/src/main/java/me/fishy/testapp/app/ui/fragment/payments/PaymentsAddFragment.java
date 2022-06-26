@@ -92,6 +92,7 @@ public class PaymentsAddFragment extends Fragment {
 
                 PaymentsFragment.addToArray(json);
                 UserDataHolder.getInstance().addToBalance(numberAmount);
+                UserDataHolder.getInstance().addToMonthlyPayments(numberAmount);
 
                 isEnabled = false;
 

@@ -19,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
@@ -90,6 +91,18 @@ public class HomeSettingsFragment extends Fragment {
         FileWriter writer = new FileWriter(stored);
         writer.write(json);
         writer.close();
+
+        System.out.println("Writing current time in mills to file. called from main");
+        File mils = new File(getActivity().getFilesDir() + "/timeinms.txt");
+
+        if (mils.exists()){
+            PrintWriter pw2 = new PrintWriter(stored);
+            pw2.close();
+        }
+
+        FileWriter writer2 = new FileWriter(mils);
+        writer2.write(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+        writer2.close();
 
         new JSONPostRequest("https://phqsh.me/update_user")
                 .post(json)

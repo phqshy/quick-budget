@@ -21,4 +21,9 @@
         android:icon="@drawable/ic_baseline_access_time_filled_24"
         android:title="Schedule"
         />
+    <item
+        android:id="@+id/location_target"
+        android:icon="@drawable/ic_baseline_target_24"
+        android:title="Target"
+        />
 </menu>
