@@ -54,4 +54,17 @@
         app:layout_constraintStart_toEndOf="@+id/target_number"
         app:layout_constraintTop_toTopOf="@+id/target_number" />
 
+    <TextView
+        android:id="@+id/target_aboveorbelow"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/target_spent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

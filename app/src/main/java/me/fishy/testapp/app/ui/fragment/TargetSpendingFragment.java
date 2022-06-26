@@ -17,6 +17,7 @@ import me.fishy.testapp.common.holders.UserDataHolder;
 public class TargetSpendingFragment extends Fragment {
     private EditText targetText;
     private TextView spentLabel;
+    private EditText aboveOrBelow;
 
     public TargetSpendingFragment(){
     }
@@ -41,6 +42,15 @@ public class TargetSpendingFragment extends Fragment {
 
             spentLabel = view.findViewById(R.id.target_spent);
             spentLabel.setText("$" + UserDataHolder.getInstance().getMonthlyPayments());
+
+            aboveOrBelow = view.findViewById(R.id.target_aboveorbelow);
+            double amount = UserDataHolder.getInstance().getTargetMonthlyPayments() - UserDataHolder.getInstance().getMonthlyPayments();
+            if (amount < 0){
+                aboveOrBelow.setTextColor(0xff0000);
+            } else {
+                aboveOrBelow.setTextColor(0xffff00);
+            }
+            aboveOrBelow.setText("$" + amount);
         } catch (NullPointerException e){
             UserDataHolder.getInstance().setMonthlyPayments(0);
             UserDataHolder.getInstance().setTargetMonthlyPayments(0);
