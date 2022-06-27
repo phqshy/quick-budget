@@ -118,4 +118,8 @@ public class UserDataHolder {
     public void setTargetMonthlyPayments(double targetMonthlyPayments) {
         this.targetMonthlyPayments = targetMonthlyPayments;
     }
+
+    public void removeFromScheduled(JSONObject object){
+        this.scheduled.remove(object);
+    }
 }

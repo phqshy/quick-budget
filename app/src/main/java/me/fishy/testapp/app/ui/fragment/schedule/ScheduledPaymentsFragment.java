@@ -98,7 +98,7 @@ public class ScheduledPaymentsFragment extends Fragment {
             }
 
             return UserDataHolder.getInstance().getScheduled();
-        } catch (IOException e){
+        } catch (IOException | NullPointerException e){
             e.printStackTrace();
             return null;
         }

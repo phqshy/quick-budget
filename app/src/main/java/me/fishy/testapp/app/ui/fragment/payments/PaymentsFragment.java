@@ -48,7 +48,6 @@ public class PaymentsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        array.clear();
         super.onViewCreated(view, savedInstanceState);
 
         AppCompatActivity parent = (AppCompatActivity) getActivity();

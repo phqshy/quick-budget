@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import me.fishy.testapp.R;
+import me.fishy.testapp.common.engines.TargetWatcher;
 import me.fishy.testapp.common.holders.UserDataHolder;
 
 public class TargetSpendingFragment extends Fragment {
@@ -39,6 +40,7 @@ public class TargetSpendingFragment extends Fragment {
         try{
             targetText = view.findViewById(R.id.target_number);
             targetText.setText(String.valueOf(UserDataHolder.getInstance().getTargetMonthlyPayments()));
+            targetText.addTextChangedListener(new TargetWatcher());
 
             spentLabel = view.findViewById(R.id.target_spent);
             spentLabel.setText("$" + UserDataHolder.getInstance().getMonthlyPayments());

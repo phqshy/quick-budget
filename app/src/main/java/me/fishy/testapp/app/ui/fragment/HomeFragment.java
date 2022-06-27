@@ -189,8 +189,7 @@ public class HomeFragment extends Fragment {
                     UserDataHolder.getInstance().setTargetMonthlyPayments(0);
                 }
             }
-        } catch (IOException e){
-
+        } catch (IOException | NullPointerException e){
         }
 
 

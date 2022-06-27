@@ -34,7 +34,6 @@ public class PaymentsAddFragment extends Fragment {
 
     private String title = null;
     private String text = null;
-    private boolean overTargetWarn = false;
 
     public PaymentsAddFragment() {
     }
@@ -42,14 +41,14 @@ public class PaymentsAddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
+        try {
             title = getArguments().getString("title");
             text = getArguments().getString("text").split("\\$")[1];
 
-            if (title != null && text != null){
+            if (title != null && text != null) {
                 getSession();
             }
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("its null lmao");
         }
     }
@@ -68,10 +67,10 @@ public class PaymentsAddFragment extends Fragment {
         EditText reason = view.findViewById(R.id.payments_reason);
 
         isEnabled = true;
-        if (title != null){
+        if (title != null) {
             reason.setText(title);
         }
-        if (text != null){
+        if (text != null) {
             amount.setText(text);
         }
 
@@ -88,35 +87,44 @@ public class PaymentsAddFragment extends Fragment {
                 int filler = (int) numberAmount;
                 numberAmount = (double) filler / 100;
 
-                if (numberAmount + UserDataHolder.getInstance().getMonthlyPayments() > UserDataHolder.getInstance().getTargetMonthlyPayments()){
-                    if (!overTargetWarn){
-                        Toast.makeText(this.getContext(), "You are above your monthly target! Do you want to continue?", Toast.LENGTH_LONG).show();
-                        overTargetWarn = true;
-                        return;
-                    } else {
-                        overTargetWarn = false;
-                    }
+                if (numberAmount + UserDataHolder.getInstance().getMonthlyPayments() > UserDataHolder.getInstance().getTargetMonthlyPayments()) {
+                    Toast.makeText(this.getContext(), "You are now over your target spending!", Toast.LENGTH_LONG).show();
+                    json.put("title", "$" + numberAmount);
+                    json.put("text", reason.getText().toString());
+
+                    PaymentsFragment.addToArray(json);
+                    UserDataHolder.getInstance().addToBalance(numberAmount);
+                    UserDataHolder.getInstance().addToMonthlyPayments(numberAmount);
+
+                    isEnabled = false;
+
+                    title = null;
+                    text = null;
+
+                    NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                    navHostFragment.getNavController().navigate(R.id.action_paymentsAddFragment_to_paymentsFragment);
+                } else{
+                    json.put("title", "$" + numberAmount);
+                    json.put("text", reason.getText().toString());
+
+                    PaymentsFragment.addToArray(json);
+                    UserDataHolder.getInstance().addToBalance(numberAmount);
+                    UserDataHolder.getInstance().addToMonthlyPayments(numberAmount);
+
+                    isEnabled = false;
+
+                    title = null;
+                    text = null;
+
+                    NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                    navHostFragment.getNavController().navigate(R.id.action_paymentsAddFragment_to_paymentsFragment);
                 }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
 
-                json.put("title", "$" + numberAmount);
-                json.put("text", reason.getText().toString());
-
-                PaymentsFragment.addToArray(json);
-                UserDataHolder.getInstance().addToBalance(numberAmount);
-                UserDataHolder.getInstance().addToMonthlyPayments(numberAmount);
-
-                isEnabled = false;
-
-                title = null;
-                text = null;
-
-                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                navHostFragment.getNavController().navigate(R.id.action_paymentsAddFragment_to_paymentsFragment);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         });
-    }
+}
 
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
@@ -127,8 +135,8 @@ public class PaymentsAddFragment extends Fragment {
         return isEnabled;
     }
 
-    private void getSession(){
-        try{
+    private void getSession() {
+        try {
             new SessionGetRequest("https://phqsh.me/login_session", LoginActivity.getName(), LoginActivity.getSession())
                     .get()
                     .thenAccept((s) -> {
