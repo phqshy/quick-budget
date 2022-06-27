@@ -5,6 +5,8 @@ const port = 1984;
 const db = require('quick.db');
 const axios = require("axios");
 const {v4: uuidv4} = require('uuid');
+const { exec } = require('child_process');
+const path = require("path");
 
 let sessions = [];
 
@@ -140,6 +142,10 @@ app.post("/update_user", async (req, res) => {
                 console.log(err);
                 res.send("Internal server error");
         }
+});
+
+app.get("/privacy", async (req, res) => {
+        res.sendFile(path.join(__dirname, "/privacy.html"));
 });
 
 app.listen(port, () => {

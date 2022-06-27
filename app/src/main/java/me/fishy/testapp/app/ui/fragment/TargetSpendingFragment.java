@@ -17,7 +17,7 @@ import me.fishy.testapp.common.holders.UserDataHolder;
 public class TargetSpendingFragment extends Fragment {
     private EditText targetText;
     private TextView spentLabel;
-    private EditText aboveOrBelow;
+    private TextView aboveOrBelow;
 
     public TargetSpendingFragment(){
     }
