@@ -94,7 +94,9 @@ public class PaymentsAddFragment extends Fragment {
 
                     PaymentsFragment.addToArray(json);
                     UserDataHolder.getInstance().addToBalance(numberAmount);
-                    UserDataHolder.getInstance().addToMonthlyPayments(numberAmount);
+                    if ((numberAmount * -1) > 0){
+                        UserDataHolder.getInstance().addToMonthlyPayments(numberAmount * -1);
+                    }
 
                     isEnabled = false;
 
@@ -109,7 +111,9 @@ public class PaymentsAddFragment extends Fragment {
 
                     PaymentsFragment.addToArray(json);
                     UserDataHolder.getInstance().addToBalance(numberAmount);
-                    UserDataHolder.getInstance().addToMonthlyPayments(numberAmount);
+                    if ((numberAmount * -1) > 0){
+                        UserDataHolder.getInstance().addToMonthlyPayments(numberAmount * -1);
+                    }
 
                     isEnabled = false;
 

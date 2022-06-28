@@ -127,7 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                        }
                    } else {
                        password.setText("");
-                       runOnUiThread(() -> Toast.makeText(this, "Your username or password is incorrect.", Toast.LENGTH_LONG).show());
                    }
                 });
             } catch (MalformedURLException e) {
