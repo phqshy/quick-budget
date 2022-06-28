@@ -104,4 +104,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirm_password_edittext" />
 
+    <Button
+        android:id="@+id/privacy_policy"
+        android:layout_width="97dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:text="Privacy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_account_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package me.fishy.testapp.app.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,12 @@ public class HomeSettingsFragment extends Fragment {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+        });
+
+        view.findViewById(R.id.privacy_settings).setOnClickListener((l) -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://phqsh.me/privacy"));
+            startActivity(i);
         });
     }
 

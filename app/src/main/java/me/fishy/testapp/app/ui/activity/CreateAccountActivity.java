@@ -3,9 +3,12 @@ package me.fishy.testapp.app.ui.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.net.URI;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.holders.UserDataHolder;
@@ -61,5 +64,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+
+        findViewById(R.id.privacy_policy).setOnClickListener(((l) -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://phqsh.me/privacy"));
+            startActivity(i);
+        }));
     }
 }
