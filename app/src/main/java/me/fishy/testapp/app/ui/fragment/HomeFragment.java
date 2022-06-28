@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
                         cached = cached.concat(s);
                     }
 
-                    if (!cached.equals("null")){
+                    if (!cached.equals("")){
                         UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(cached, UserDataHolder.class));
 
                         ArrayList<JSONObject> initJSON = new ArrayList<>();

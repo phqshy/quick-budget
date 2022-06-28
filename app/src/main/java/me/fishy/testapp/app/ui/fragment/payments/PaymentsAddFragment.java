@@ -153,7 +153,7 @@ public class PaymentsAddFragment extends Fragment {
                                 PrintWriter pw = new PrintWriter(getActivity().getCacheDir() + "/uuid.txt");
                                 pw.close();
 
-                                UserDataHolder.setInstance(null);
+                                //UserDataHolder.setInstance(null);
 
                                 Intent intent = new Intent(this.getActivity(), LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

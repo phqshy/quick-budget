@@ -64,8 +64,12 @@ public class ScheduledPaymentsFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.scheduled_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        if (recyclerAdapter == null){
-            recyclerAdapter = new ScheduledRecyclerAdapter(UserDataHolder.getInstance().getScheduled() == null ? UserDataHolder.getInstance().getScheduled() : loadCachedInstance(), false);
+        try{
+            if (recyclerAdapter == null){
+                recyclerAdapter = new ScheduledRecyclerAdapter(UserDataHolder.getInstance().getScheduled(), false);
+            }
+        } catch (NullPointerException e){
+
         }
 
         recycler.setAdapter(recyclerAdapter);
