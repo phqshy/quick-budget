@@ -23,7 +23,8 @@ import java.io.IOException;
 
 import me.fishy.testapp.R;
 import me.fishy.testapp.common.engines.TextWatcherEngine;
-import me.fishy.testapp.common.request.get.ExchangeGetRequest;
+import me.fishy.testapp.common.request.GetRequest;
+import me.fishy.testapp.common.request.GetRequestBuilder;
 
 public class ExchangeRateFragment extends Fragment {
     private JSONArray exchangeJson = new JSONArray();
@@ -51,65 +52,76 @@ public class ExchangeRateFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextWatcherEngine.clearInstances();
 
-        if (exchangeJson.length() == 0){
-            try{
-                new ExchangeGetRequest("https://phqsh.me/exchange/usd", getContext()).get().thenAcceptAsync((e) -> {
-                    try {
-                        JSONObject usdJSON = new JSONObject(e);
-                        usdJSON = usdJSON.getJSONObject("conversion_rates");
-                        exchangeJson.put(usdJSON);
-                        System.out.println("usd gotten");
-                    } catch (JSONException jsonException) {
-                        Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
-                        jsonException.printStackTrace();
-                    }
-                });
+        if (exchangeJson.length() == 0) {
+            GetRequest request = new GetRequestBuilder()
+                    .setUrl("https://phqsh.me/exchange/usd")
+                    .build();
 
-                new ExchangeGetRequest("https://phqsh.me/exchange/jpy", getContext()).get().thenAcceptAsync((e) -> {
-                    try {
-                        JSONObject usdJSON = new JSONObject(e);
-                        usdJSON = usdJSON.getJSONObject("conversion_rates");
-                        exchangeJson.put(usdJSON);
-                        System.out.println("jpy gotten");
-                    } catch (JSONException jsonException) {
-                        Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
-                        jsonException.printStackTrace();
-                    }
-                });
+            request.execute().thenAcceptAsync((e) -> {
+                try {
+                    JSONObject usdJSON = new JSONObject(e);
+                    usdJSON = usdJSON.getJSONObject("conversion_rates");
+                    exchangeJson.put(usdJSON);
+                    System.out.println("usd gotten");
+                } catch (JSONException jsonException) {
+                    Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
+                    jsonException.printStackTrace();
+                }
+            });
 
-                new ExchangeGetRequest("https://phqsh.me/exchange/gbp", getContext()).get().thenAcceptAsync((e) -> {
-                    try {
-                        JSONObject usdJSON = new JSONObject(e);
-                        usdJSON = usdJSON.getJSONObject("conversion_rates");
-                        exchangeJson.put(usdJSON);
-                        System.out.println("gbp gotten");
-                    } catch (JSONException jsonException) {
-                        Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
-                        jsonException.printStackTrace();
-                    }
-                });
+            request = new GetRequestBuilder()
+                    .setUrl("https://phqsh.me/exchange/jpy")
+                    .build();
 
-                new ExchangeGetRequest("https://phqsh.me/exchange/eur", getContext()).get().thenAcceptAsync((e) -> {
-                    try {
-                        JSONObject usdJSON = new JSONObject(e);
-                        usdJSON = usdJSON.getJSONObject("conversion_rates");
-                        exchangeJson.put(usdJSON);
-                        System.out.println(exchangeJson + "\n exchange json");
-                    } catch (JSONException jsonException) {
-                        Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
-                        jsonException.printStackTrace();
-                    }
-                });
+            request.execute().thenAcceptAsync((e) -> {
+                try {
+                    JSONObject usdJSON = new JSONObject(e);
+                    usdJSON = usdJSON.getJSONObject("conversion_rates");
+                    exchangeJson.put(usdJSON);
+                    System.out.println("jpy gotten");
+                } catch (JSONException jsonException) {
+                    Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
+                    jsonException.printStackTrace();
+                }
+            });
 
-                initViews(view, exchangeJson);
-            } catch (IOException e){
-                Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+            request = new GetRequestBuilder()
+                    .setUrl("https://phqsh.me/exchange/gbp")
+                    .build();
+
+            request.execute().thenAcceptAsync((e) -> {
+                try {
+                    JSONObject usdJSON = new JSONObject(e);
+                    usdJSON = usdJSON.getJSONObject("conversion_rates");
+                    exchangeJson.put(usdJSON);
+                    System.out.println("gbp gotten");
+                } catch (JSONException jsonException) {
+                    Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
+                    jsonException.printStackTrace();
+                }
+            });
+
+            request = new GetRequestBuilder()
+                    .setUrl("https://phqsh.me/exchange/eur")
+                    .build();
+
+            request.execute().thenAcceptAsync((e) -> {
+                try {
+                    JSONObject usdJSON = new JSONObject(e);
+                    usdJSON = usdJSON.getJSONObject("conversion_rates");
+                    exchangeJson.put(usdJSON);
+                    System.out.println("eur gotten");
+                } catch (JSONException jsonException) {
+                    Toast.makeText(getContext(), "Failed to load exchange rates", Toast.LENGTH_LONG).show();
+                    jsonException.printStackTrace();
+                }
+            });
+
+            initViews(view, exchangeJson);
         }
     }
 
-    private void initViews(View view, JSONArray array){
+    private void initViews(View view, JSONArray array) {
         this.inputText = view.findViewById(R.id.exchange_input);
         this.outputText = view.findViewById(R.id.exchange_input_out);
         this.inputSpinner = view.findViewById(R.id.exchange_options);

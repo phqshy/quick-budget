@@ -132,7 +132,6 @@ public class NewScheduleFragment extends Fragment {
         data.putString("content", content);
         work.setInputData(data.build());
         work.setInitialDelay(calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis(), TimeUnit.MILLISECONDS);
-
         WorkManager.getInstance(context).beginUniqueWork(
                 String.valueOf(code),
                 ExistingWorkPolicy.REPLACE,

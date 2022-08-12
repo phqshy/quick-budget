@@ -1,3 +1,7 @@
+package me.fishy.testapp.common.request;
+
+import java.util.concurrent.CompletableFuture;
+
 public interface Request{
-    private CompleteableFuture<String> get(); 
+    CompletableFuture<String> execute();
 }
