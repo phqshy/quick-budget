@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -30,7 +31,8 @@ import java.util.concurrent.CompletableFuture;
 import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.fragment.schedule.ScheduledPaymentsFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.get.LoginGetRequest;
+import me.fishy.testapp.common.request.GetRequestBuilder;
+import me.fishy.testapp.common.request.Request;
 
 /**
  * Entry point to the app- all startup methods should be called here
@@ -55,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         //Haven't tried it with fake session IDs
         //Keep collapsed to avoid brain rot
         File uuid = new File(getCacheDir() + "/uuid.txt");
-        if (uuid.exists()){
+        if (uuid.exists()) {
             try {
                 Scanner scanner = new Scanner(uuid);
                 String session = scanner.nextLine();
@@ -70,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.session = session;
 
                 SESSIONFLAG = true;
-            } catch (Exception e){
+            } catch (Exception e) {
                 SESSIONFLAG = false;
             }
         }
@@ -78,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         this.username = findViewById(R.id.login_username);
         this.password = findViewById(R.id.login_password);
 
-        if (!toastMessage.equals("")){
+        if (!toastMessage.equals("")) {
             Toast.makeText(getBaseContext(), toastMessage, Toast.LENGTH_SHORT).show();
         }
 
@@ -88,50 +90,54 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            try {
-                CompletableFuture<String> resp = new LoginGetRequest("https://phqsh.me/login", username.getText().toString().replace(' ', '_'), encrypt(password.getText().toString())).get();
-                resp.thenAcceptAsync((r) -> {
-                   System.out.println(r);
+            HashMap<String, String> loginArgs = new HashMap<>();
+            loginArgs.put("username", username.getText().toString().replace(' ', '_'));
+            loginArgs.put("password", encrypt(password.getText().toString()));
+
+            Request loginRequest = new GetRequestBuilder()
+                    .setUrl("https://phqsh.me/login")
+                    .setArgs(loginArgs)
+                    .build();
+
+            loginRequest.execute().thenAcceptAsync((r) -> {
+                System.out.println(r);
                    /*
                    If we get to auto login, this never triggers
                    we can use this to our advantage by having two places
                    to update values that were modified offline without
                    having to worry about duplication
                     */
-                   if (!(r.equals("Internal server error") || r.equals("Invalid credentials"))){
-                       Intent intent = new Intent(this, MainActivity.class);
-                       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                       UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(r, UserDataHolder.class));
-                       readOfflineUpdates();
-                       try {
-                           File f = new File(getCacheDir() + "/uuid.txt");
+                if (!(r.equals("Internal server error") || r.equals("Invalid credentials"))) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(r, UserDataHolder.class));
+                    readOfflineUpdates();
+                    try {
+                        File f = new File(getCacheDir() + "/uuid.txt");
 
-                           if (f.exists()){
-                               System.out.println("writing null");
-                               PrintWriter pw = new PrintWriter(getCacheDir() + "/uuid.txt");
-                               pw.close();
-                           }
-                           FileWriter writer = new FileWriter(f);
-                           System.out.println("writing uuid login");
-                           writer.write(UserDataHolder.getInstance().getUUID());
-                           System.out.println("writing username login");
-                           writer.write("\n");
-                           writer.write(UserDataHolder.getInstance().getUsername());
-                           writer.close();
+                        if (f.exists()) {
+                            System.out.println("writing null");
+                            PrintWriter pw = new PrintWriter(getCacheDir() + "/uuid.txt");
+                            pw.close();
+                        }
+                        FileWriter writer = new FileWriter(f);
+                        System.out.println("writing uuid login");
+                        writer.write(UserDataHolder.getInstance().getUUID());
+                        System.out.println("writing username login");
+                        writer.write("\n");
+                        writer.write(UserDataHolder.getInstance().getUsername());
+                        writer.close();
 
-                           System.out.println("starting activity");
-                           startActivity(intent);
-                           finish();
-                       } catch (IOException e) {
-                           e.printStackTrace();
-                       }
-                   } else {
-                       password.setText("");
-                   }
-                });
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+                        System.out.println("starting activity");
+                        startActivity(intent);
+                        finish();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    password.setText("");
+                }
+            });
         });
 
         findViewById(R.id.button).setOnClickListener((v) -> {
@@ -147,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
 
         System.out.println("checking session");
-        if (SESSIONFLAG){
+        if (SESSIONFLAG) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             System.out.println("starting activity");
@@ -155,13 +161,13 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
     }
-    
-    private void initAppData(){
+
+    private void initAppData() {
         createNotificationChannel();
 
     }
 
-    private void createNotificationChannel(){
+    private void createNotificationChannel() {
         CharSequence name = "Quick Budget";
         String description = "Budgeting app for Android";
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -174,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static String encrypt(String base) {
-        try{
+        try {
             final MessageDigest digest = MessageDigest.getInstance("SHA-256");
             final byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
             final StringBuilder hexString = new StringBuilder();
@@ -185,22 +191,22 @@ public class LoginActivity extends AppCompatActivity {
                 hexString.append(hex);
             }
             return hexString.toString();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public static boolean didAutoLogin(){
+    public static boolean didAutoLogin() {
         boolean fill = SESSIONFLAG;
         SESSIONFLAG = false;
         return fill;
     }
 
-    private void readOfflineUpdates(){
+    private void readOfflineUpdates() {
         File f = new File(getFilesDir() + "/offline_updates.txt");
 
-        if (f.exists()){
-            try{
+        if (f.exists()) {
+            try {
                 List<String> lines = Files.readAllLines(Paths.get(getFilesDir() + "/offline_updates.txt"), Charset.defaultCharset());
 
                 /*
@@ -212,61 +218,61 @@ public class LoginActivity extends AppCompatActivity {
                 RMNOTIF^title1_title2+text1_text2 (remove notification from active notifications)
                  */
 
-                for (String l : lines){
+                for (String l : lines) {
                     String[] actions = l.split("\\$\\^");
-                    switch (actions[0]){
+                    switch (actions[0]) {
                         case "BALANCE":
                             updateBalance(actions[1]);
                         case "RMNOTIF":
                             removeNotification(actions[1]);
                     }
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-            try{
-                PrintWriter pw = new PrintWriter(getFilesDir() + "/offline_updates.txt");
-                pw.close();
-            } catch (IOException e){
-                e.printStackTrace();
+                try {
+                    PrintWriter pw = new PrintWriter(getFilesDir() + "/offline_updates.txt");
+                    pw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
         }
     }
 
-    private void updateBalance(String amount){
+    private void updateBalance(String amount) {
         double aDouble = Double.parseDouble(amount);
         UserDataHolder.getInstance().addToBalance(aDouble);
     }
 
-    private void removeNotification(String undecodedTitleText){
+    private void removeNotification(String undecodedTitleText) {
         String[] titleText = undecodedTitleText.split("\\+");
         String title = titleText[0].replaceAll("_", " ");
         String text = titleText[0].replaceAll("_", " ");
 
         ArrayList<JSONObject> array = UserDataHolder.getInstance().getScheduled();
-        try{
-            for (JSONObject json : array){
-                if (json.getString("title").equals(title) && json.getString("text").equals(text)){
+        try {
+            for (JSONObject json : array) {
+                if (json.getString("title").equals(title) && json.getString("text").equals(text)) {
                     array.remove(json);
                     UserDataHolder.getInstance().setScheduled(array);
                     break;
                 }
             }
-        } catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public static String getSession(){
+    public static String getSession() {
         return session;
     }
 
-    public static String getName(){
+    public static String getName() {
         return name;
     }
 
-    public static void setToastMessage(String message){
+    public static void setToastMessage(String message) {
         toastMessage = message;
     }
 }
