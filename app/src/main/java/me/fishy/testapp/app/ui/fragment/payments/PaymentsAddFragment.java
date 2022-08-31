@@ -27,7 +27,7 @@ import me.fishy.testapp.R;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.get.SessionGetRequest;
+import me.fishy.testapp.common.request.*;
 
 public class PaymentsAddFragment extends Fragment {
     private static boolean isEnabled = false;
