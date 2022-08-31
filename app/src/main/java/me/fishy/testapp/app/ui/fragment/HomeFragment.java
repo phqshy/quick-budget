@@ -34,7 +34,7 @@ import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.app.ui.fragment.schedule.NewScheduleFragment;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.get.SessionGetRequest;
+import me.fishy.testapp.common.request.*;
 
 public class HomeFragment extends Fragment {
     public HomeFragment() {
@@ -94,11 +94,18 @@ public class HomeFragment extends Fragment {
 
                 System.out.println(LoginActivity.getName());
                 System.out.println(LoginActivity.getSession());
+                
+                HashMap<String, String> args = new HashMap();
+                args.put("username", LoginActivity.getName());
+                args.put("uuid", LoginActivity.getSession());
 
-                new SessionGetRequest("https://phqsh.me/login_session", LoginActivity.getName(), LoginActivity.getSession())
-                        .get()
-                        .thenAccept((s) -> {
-                            System.out.println(s);
+                GetRequest request = new GetRequestBuilder()
+                    .setURL("https://phqsh.me/login_session")
+                    .setArgs(args)
+                    .build();
+
+                request.execute().theAccept((s) -> {
+                     System.out.println(s);
                             if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))){
                                 UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
 
@@ -155,7 +162,7 @@ public class HomeFragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
-                        });
+                });
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
