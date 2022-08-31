@@ -141,10 +141,17 @@ public class PaymentsAddFragment extends Fragment {
 
     private void getSession() {
         try {
-            new SessionGetRequest("https://phqsh.me/login_session", LoginActivity.getName(), LoginActivity.getSession())
-                    .get()
-                    .thenAccept((s) -> {
-                        System.out.println(s);
+            HashMap<String, String> args = new HashMap();
+            args.put("username", LoginActivity.getName());
+            args.put("uuid", LoginActivity.getSession());
+            
+            GetRequest request = new GetRequestBuilder()
+                .setURL("https://phqsh.me/login_session")
+                .setArgs(args)
+                .build();
+            
+            request.execute().thenAcceptAsync((s) -> {
+                 System.out.println(s);
                         if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))) {
                             UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
 
@@ -168,7 +175,7 @@ public class PaymentsAddFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                    });
+            });
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
