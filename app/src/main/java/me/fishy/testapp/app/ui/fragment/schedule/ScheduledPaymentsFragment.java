@@ -35,7 +35,7 @@ import me.fishy.testapp.app.recycler.ScheduledRecyclerAdapter;
 import me.fishy.testapp.app.ui.activity.LoginActivity;
 import me.fishy.testapp.app.ui.activity.MainActivity;
 import me.fishy.testapp.common.holders.UserDataHolder;
-import me.fishy.testapp.common.request.get.SessionGetRequest;
+import me.fishy.testapp.common.request.*;
 
 public class ScheduledPaymentsFragment extends Fragment {
     public static ScheduledRecyclerAdapter recyclerAdapter = null;
@@ -134,10 +134,17 @@ public class ScheduledPaymentsFragment extends Fragment {
 
     private void getSession(){
         try{
-            new SessionGetRequest("https://phqsh.me/login_session", LoginActivity.getName(), LoginActivity.getSession())
-                    .get()
-                    .thenAccept((s) -> {
-                        System.out.println(s);
+            HashMap<String, String> args = new HashMap();
+            args.put("username", LoginActivity.getName());
+            args.put("uuid", LoginActivity.getSession());
+            
+            GetRequest request = new GetRequestBuilder()
+                .setURL("https://phqsh.me/login_session")
+                .setArgs(args)
+                .build();
+            
+            request.execute().thenAcceptAsync((s) -> {
+                 System.out.println(s);
                         if (!(s.equals("Invalid session ID") || s.equals("Internal server error"))) {
                             UserDataHolder.setInstance(UserDataHolder.getGson().fromJson(s, UserDataHolder.class));
 
@@ -161,7 +168,7 @@ public class ScheduledPaymentsFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                    });
+            });
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
