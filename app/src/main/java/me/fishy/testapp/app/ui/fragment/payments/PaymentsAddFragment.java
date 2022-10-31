@@ -87,7 +87,7 @@ public class PaymentsAddFragment extends Fragment {
                 int filler = (int) numberAmount;
                 numberAmount = (double) filler / 100;
 
-                if (numberAmount + UserDataHolder.getInstance().getMonthlyPayments() > UserDataHolder.getInstance().getTargetMonthlyPayments()) {
+                if (numberAmount + (-1 * UserDataHolder.getInstance().getMonthlyPayments()) > UserDataHolder.getInstance().getTargetMonthlyPayments()) {
                     Toast.makeText(this.getContext(), "You are now over your target spending!", Toast.LENGTH_LONG).show();
                     json.put("title", "$" + numberAmount);
                     json.put("text", reason.getText().toString());
